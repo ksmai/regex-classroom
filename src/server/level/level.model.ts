@@ -38,8 +38,11 @@ export const levelSchema = new mongoose.Schema({
   },
 });
 
-levelSchema.statics.countAll = function() {
-  return this.count({}).exec();
+levelSchema.statics.getAll = function() {
+  return this
+    .find({})
+    .sort({ difficulty: 1 })
+    .exec();
 };
 
 levelSchema.statics.get = function(difficulty: number) {

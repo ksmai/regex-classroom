@@ -4,6 +4,8 @@ import * as mongoose from 'mongoose';
 import * as passport from 'passport';
 
 import { authRouter } from './auth/auth.router';
+import { levelRouter } from './level/level.router';
+import { userRouter } from './user/user.router';
 
 // provide ES6 promise to mongoose
 (mongoose as any).Promise = Promise;
@@ -38,6 +40,8 @@ if (process.env.NODE_ENV === 'production') {
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth', authRouter);
+app.use('/api/v1', userRouter);
+app.use('/api/v1', levelRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(require('compression')());

@@ -54,12 +54,6 @@ describe('Level', () => {
         .then(() => done.fail(), done);
     });
 
-    it('should not allow inserting the same difficulty twice', (done) => {
-      Level
-        .create(testLevel(level.difficulty))
-        .then(() => done.fail(), done);
-    });
-
     it('should not allow negative difficulty', (done) => {
       Level
         .create(testLevel(-1))
@@ -76,17 +70,18 @@ describe('Level', () => {
     });
   });
 
-  describe('countAll', () => {
-    it('should count total number of levels', (done) => {
+  describe('getAll', () => {
+    it('should get all available levels', (done) => {
       (Level as any)
-        .countAll()
-        .then((total: number) => {
-          expect(total).toEqual(count);
+        .getAll()
+        .then((levels: any[]) => {
+          expect(levels.length).toEqual(count);
+          expect(levels[0].name).toEqual(level.name);
           return Level.create(testLevel(count++));
         })
-        .then(() => (Level as any).countAll())
-        .then((total: number) => {
-          expect(total).toEqual(count);
+        .then(() => (Level as any).getAll())
+        .then((levels: any[]) => {
+          expect(levels.length).toEqual(count);
         })
         .then(done, done.fail);
     });

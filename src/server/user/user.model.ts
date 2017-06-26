@@ -46,9 +46,17 @@ userSchema.statics.signup = function(name: string, password: string) {
     return Promise.reject(new Error('Password is too long'));
   }
 
-  return bcrypt
-    .hash(password, 8)
-    .then((hash) => this.create({ name, hash }))
+  return this
+    .findOne({ name })
+    .exec()
+    .then((user: any) => {
+      if (user) {
+        throw new Error(`Username already exists: ${name}`);
+      }
+
+      return bcrypt.hash(password, 8);
+    })
+    .then((hash: string) => this.create({ name, hash }))
     .then(helpers.toObject);
 };
 
