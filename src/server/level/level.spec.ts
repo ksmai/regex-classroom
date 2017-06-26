@@ -46,6 +46,14 @@ describe('Level', () => {
       count += 1;
     });
 
+    it('should not allow a level without name', (done) => {
+      const newLevel = testLevel(count);
+      delete newLevel.name;
+      new Level(newLevel)
+        .validate()
+        .then(() => done.fail(), done);
+    });
+
     it('should not allow inserting the same difficulty twice', (done) => {
       Level
         .create(testLevel(level.difficulty))

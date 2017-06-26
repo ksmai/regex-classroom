@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 // provide ES6 promise to mongoose
 (mongoose as any).Promise = Promise;
 const MONGO_URL = process.env.MONGO_URL ||
-  'mongodb://localhost/regex-classroom';
+  'mongodb://localhost:27017/regex-classroom';
 mongoose
   .connect(MONGO_URL)
   .then(() => {

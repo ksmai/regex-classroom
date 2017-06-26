@@ -12,6 +12,11 @@ export const levelSchema = new mongoose.Schema({
     min: 0,
   },
 
+  name: {
+    type: String,
+    required: true,
+  },
+
   tests: {
     type: [{
       question: {
