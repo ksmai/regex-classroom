@@ -8,7 +8,7 @@ module.exports = {
 
   entry: {
     polyfills: paths.polyfills,
-    main: ['webpack-hot-middleware/client', paths.main],
+    main: ['webpack-hot-middleware/client?reload=true', paths.main],
   },
 
   output: {
