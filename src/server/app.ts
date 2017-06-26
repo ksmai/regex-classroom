@@ -1,9 +1,14 @@
 /* tslint:disable:no-console */
 import * as express from 'express';
 import * as mongoose from 'mongoose';
+import * as passport from 'passport';
+
+import { authRouter } from './auth/auth.router';
 
 // provide ES6 promise to mongoose
 (mongoose as any).Promise = Promise;
+
+// connect to mongoDB
 const MONGO_URL = process.env.MONGO_URL ||
   'mongodb://localhost:27017/regex-classroom';
 mongoose
@@ -18,6 +23,21 @@ mongoose
   });
 
 export const app = express();
+// set up passport for authentication
+const sessionConfig = {
+  resave: false,
+  saveUnitialized: false,
+  secret: process.env.NODE_ENV || 'keyboard cat',
+  maxAge: 24 * 60 * 60 * 1000,
+};
+if (process.env.NODE_ENV === 'production') {
+  app.use(require('cookie-session')(sessionConfig));
+} else {
+  app.use(require('express-session')(sessionConfig));
+}
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', authRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(require('compression')());
