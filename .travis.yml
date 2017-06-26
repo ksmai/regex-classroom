@@ -13,6 +13,8 @@ addons:
     packages:
       - google-chrome-stable
 
+services: mongodb
+
 before_script:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
