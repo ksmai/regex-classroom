@@ -68,6 +68,12 @@ if (process.env.NODE_ENV === 'production') {
   app.use(instance);
 }
 
+app.use((err: any, req: any, res: any, next: any) => {
+  const status = err.status || 500;
+  const message = err.message || err.toString();
+  res.status(status).json({ error: message });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`${process.env.NODE_ENV} server running on port ${PORT}`);

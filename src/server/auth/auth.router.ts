@@ -46,6 +46,22 @@ authRouter.get('/me', ensureLogin, (req, res) => {
   res.json({ user: req.user });
 });
 
+authRouter.get('/name/:name', (req, res, next) => {
+  User
+    .findOne({ name: req.params.name })
+    .exec()
+    .then((user: any) => {
+      if (user) {
+        throw new Error(`Username "${req.params.name}" is already in use`);
+      }
+      res.json({});
+    })
+    .catch((err: any) => {
+      err.status = 400;
+      next(err);
+    });
+});
+
 authRouter.use((err: any, req: any, res: any, next: any) => {
   const status = err.status || 401;
   const message = err.message || err.toString();

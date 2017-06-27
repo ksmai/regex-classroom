@@ -10,6 +10,7 @@ describe('authRouter', () => {
   let request: any;
   let loginSpy: jasmine.Spy;
   let signupSpy: jasmine.Spy;
+  let findSpy: jasmine.Spy;
   let user: any;
   const username = 'username';
   const password = 'password';
@@ -25,6 +26,8 @@ describe('authRouter', () => {
         .and.returnValue(Promise.resolve(user));
       signupSpy = spyOn(User as any, 'signup')
         .and.returnValue(Promise.resolve(user));
+      findSpy = spyOn(User, 'findOne')
+        .and.returnValue({ exec: () => Promise.resolve(null) });
     });
 
     it('should be able to login', (done) => {
@@ -64,6 +67,13 @@ describe('authRouter', () => {
       request
         .get('/me')
         .expect(401)
+        .then(done, done.fail);
+    });
+
+    it('should be able to check availablility of names', (done) => {
+      request
+        .get(`/name/${user.name}`)
+        .expect(200)
         .then(done, done.fail);
     });
   });
