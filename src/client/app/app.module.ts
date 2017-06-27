@@ -9,6 +9,7 @@ import '../styles/styles.scss';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { CheatsheetModule } from './cheatsheet/cheatsheet.module';
 import { CoreModule } from './core/core.module';
 import { FooterModule } from './footer/footer.module';
 import { NavModule } from './nav/nav.module';
@@ -21,6 +22,7 @@ import { NavModule } from './nav/nav.module';
     NavModule,
     FooterModule,
     AuthModule,
+    CheatsheetModule,
     AppRoutingModule,
   ],
 

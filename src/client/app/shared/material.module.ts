@@ -3,9 +3,9 @@ import {
   MdButtonModule,
   MdCardModule,
   MdIconModule,
-  MdProgressSpinnerModule,
   MdInputModule,
   MdProgressBarModule,
+  MdProgressSpinnerModule,
   MdSnackBarModule,
   MdToolbarModule,
 } from '@angular/material';

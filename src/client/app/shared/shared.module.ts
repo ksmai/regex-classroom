@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { AccordionComponent } from './accordion/accordion.component';
 import { MaterialModule } from './material.module';
 
 @NgModule({
@@ -10,11 +11,13 @@ import { MaterialModule } from './material.module';
   ],
 
   declarations: [
+    AccordionComponent,
   ],
 
   exports: [
     CommonModule,
     MaterialModule,
+    AccordionComponent,
   ],
 })
 export class SharedModule {

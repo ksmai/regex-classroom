@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/skip';
+import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../core/user.service';
 

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 import { MdSnackBar } from '@angular/material';
+import { Subscription } from 'rxjs/Subscription';
 
 import { IUser, UserService } from '../core/user.service';
 

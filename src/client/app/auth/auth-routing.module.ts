@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { GuestOnlyGuard } from './guest-only-guard.service';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { GuestOnlyGuard } from './guest-only-guard.service';
 
 const routes: Routes = [
   {
