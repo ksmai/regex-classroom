@@ -1,6 +1,7 @@
 <md-card class="accordion">
   <md-card-title class="accordion__toggle" (click)="toggleOpen()">
     <ng-content select="[accordionToggle]"></ng-content>
+    <md-icon class="accordion__arrow">send</md-icon>
   </md-card-title>
 
   <md-card-content class="accordion__content" #body>

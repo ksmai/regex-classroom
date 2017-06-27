@@ -1,6 +1,6 @@
 <ng-container *ngIf="levelList$ | async as levels">
   <re-accordion *ngFor="let level of levels" class="accordion">
-    <h3 accordionToggle class="accordion__toggle">{{level.name}}</h3>
+    <h3 accordionToggle>{{level.name}}</h3>
     <table class="table">
       <tbody>
         <tr *ngFor="let test of level.tests" class="table__row">

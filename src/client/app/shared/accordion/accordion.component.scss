@@ -2,6 +2,36 @@
   display: block;
 }
 
+.accordion__toggle {
+  cursor: pointer;
+  position: relative;
+  padding: 20px;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.accordion__arrow {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+  transform: rotate(0);
+}
+
 .accordion__content {
   overflow: hidden;
+  transition: height .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+:host(.accordion-open) {
+  .accordion__arrow {
+    transform: rotate(90deg);
+  }
+
+  .accordion__content {
+    transition-timing-function: cubic-bezier(.4, 0, 0, 1.3);
+  }
 }
