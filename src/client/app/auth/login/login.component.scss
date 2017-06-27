@@ -1,0 +1,27 @@
+.login {
+  width: 90%;
+  max-width: 500px;
+  margin: 30px auto 0;
+}
+
+.login__title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login__action {
+  text-align: center;
+}
+
+.login__icon {
+  margin-right: 10px;
+}
+
+.login__control,
+.login__input-container {
+  display: block;
+}
+
+.login__input-container {
+  margin-bottom: 20px;
+}

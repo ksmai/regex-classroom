@@ -1,57 +1,59 @@
 <md-card class="signup">
   <md-card-title><h3 class="signup__title">Signup</h3></md-card-title>
 
-  <md-card-content [formGroup]="form">
-    <md-input-container class="signup__input-container">
-      <input
-        mdInput
-        type="text"
-        formControlName="username"
-        class="signup__control"
-      >
-      <md-placeholder>Username</md-placeholder>
-      <md-error align="end">{{nameError}}</md-error>
-      <md-hint align="end">{{nameHint}}</md-hint>
-      <md-icon mdPrefix class="signup__icon">face</md-icon>
-    </md-input-container>
-
-    <div formGroupName="passwords">
+  <md-card-content>
+    <form [formGroup]="form" (submit)="onSubmit()">
       <md-input-container class="signup__input-container">
         <input
           mdInput
-          type="password"
-          formControlName="password"
+          type="text"
+          formControlName="username"
           class="signup__control"
         >
-        <md-placeholder>Password</md-placeholder>
-        <md-error align="end">{{passwordError}}</md-error>
-        <md-hint align="end">{{passwordHint}}</md-hint>
-        <md-icon mdPrefix class="signup__icon">vpn_key</md-icon>
+        <md-placeholder>Username</md-placeholder>
+        <md-error align="end">{{nameError}}</md-error>
+        <md-hint align="end">{{nameHint}}</md-hint>
+        <md-icon mdPrefix class="signup__icon">face</md-icon>
       </md-input-container>
 
-      <md-input-container class="signup__input-container">
-        <input
-          mdInput
-          type="password"
-          formControlName="confirmPassword"
-          class="signup__control"
-        >
-        <md-placeholder>Confirm password</md-placeholder>
-        <md-error align="end">{{confirmPasswordError}}</md-error>
-        <md-hint align="end">{{confirmPasswordHint}}</md-hint>
-        <md-icon mdPrefix class="signup__icon">vpn_key</md-icon>
-      </md-input-container>
-    </div>
+      <fieldset formGroupName="passwords">
+        <md-input-container class="signup__input-container">
+          <input
+            mdInput
+            type="password"
+            formControlName="password"
+            class="signup__control"
+          >
+          <md-placeholder>Password</md-placeholder>
+          <md-error align="end">{{passwordError}}</md-error>
+          <md-hint align="end">{{passwordHint}}</md-hint>
+          <md-icon mdPrefix class="signup__icon">vpn_key</md-icon>
+        </md-input-container>
+
+        <md-input-container class="signup__input-container">
+          <input
+            mdInput
+            type="password"
+            formControlName="confirmPassword"
+            class="signup__control"
+          >
+          <md-placeholder>Confirm password</md-placeholder>
+          <md-error align="end">{{confirmPasswordError}}</md-error>
+          <md-hint align="end">{{confirmPasswordHint}}</md-hint>
+          <md-icon mdPrefix class="signup__icon">vpn_key</md-icon>
+        </md-input-container>
+      </fieldset>
+
+      <fieldset *ngIf="!pending; else loader" class="signup__action">
+        <button
+          md-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="!form.valid"
+        >SIGNUP</button>
+      </fieldset>
+    </form>
   </md-card-content>
-
-  <md-card-actions *ngIf="!pending; else loader" class="signup__action">
-    <button
-      md-raised-button
-      color="accent"
-      (click)="onSubmit()"
-      [disabled]="!form.valid"
-    >SIGNUP</button>
-  </md-card-actions>
 
   <ng-template #loader>
     <md-card-footer>

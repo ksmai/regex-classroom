@@ -3,15 +3,28 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { GuestOnlyGuard } from './guest-only-guard.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [GuestOnlyGuard],
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    canActivate: [GuestOnlyGuard],
+  },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
+  ],
+
+  providers: [
+    GuestOnlyGuard,
   ],
 
   exports: [

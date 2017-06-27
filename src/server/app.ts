@@ -28,7 +28,7 @@ export const app = express();
 // set up passport for authentication
 const sessionConfig = {
   resave: false,
-  saveUnitialized: false,
+  saveUninitialized: false,
   secret: process.env.NODE_ENV || 'keyboard cat',
   maxAge: 24 * 60 * 60 * 1000,
 };

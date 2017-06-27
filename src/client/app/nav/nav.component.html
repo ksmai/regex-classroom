@@ -7,7 +7,14 @@
   <nav class="auth-nav">
     <ng-container *ngIf="user && user.name; else login">
       <a md-button>Welcome, {{user.name}}</a>
-      <a md-button>LOGOUT</a>
+      <button
+        md-button
+        (click)="logout()"
+        *ngIf="!isLoggingOut; else loader"
+      >LOGOUT</button>
+      <ng-template #loader>
+        <md-spinner color="accent" class="spinner"></md-spinner>
+      </ng-template>
     </ng-container>
 
     <ng-template #login>

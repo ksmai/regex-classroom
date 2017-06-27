@@ -8,8 +8,6 @@ import {
 } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../../core/user.service';
 
@@ -54,13 +52,20 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (!this.form.valid && !this.form.disabled) {
+      this.pending = false;
+      this.form.enable();
+      return;
+    }
     const username = this.form.get('username').value;
     const password = this.form.get('passwords.password').value;
     this.pending = true;
+    this.form.disable();
     this.userService
       .signup(username, password)
       .subscribe((success: boolean) => {
         this.pending = false;
+        this.form.enable();
         if (success) {
           this.snackbar.open(`Welcome, ${username}!`, null, {
             duration: 5000,
@@ -73,6 +78,7 @@ export class SignupComponent implements OnInit {
           .onAction()
           .subscribe(() => {
             this.pending = true;
+            this.form.disable();
             setTimeout(() => this.onSubmit(), 1500);
           });
         }

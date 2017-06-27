@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { MdSnackBar } from '@angular/material';
+
 import { IUser, UserService } from '../core/user.service';
 
 @Component({
@@ -10,8 +12,12 @@ import { IUser, UserService } from '../core/user.service';
 export class NavComponent implements OnInit, OnDestroy {
   user: IUser;
   subscription: Subscription;
+  isLoggingOut: boolean = false;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private snackbar: MdSnackBar,
+  ) {
   }
 
   ngOnInit(): void {
@@ -23,5 +29,26 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  logout(): void {
+    this.isLoggingOut = true;
+    this.userService
+      .logout()
+      .subscribe((success: boolean) => {
+        this.isLoggingOut = false;
+        if (success) {
+          this.snackbar.open('Bye!', null, { duration: 5000 });
+        } else {
+          this.snackbar.open('An error has occurred!', 'RETRY', {
+            duration: 5000,
+          })
+          .onAction()
+          .subscribe(() => {
+            this.isLoggingOut = true;
+            setTimeout(() => this.logout(), 1500);
+          });
+        }
+      });
   }
 }

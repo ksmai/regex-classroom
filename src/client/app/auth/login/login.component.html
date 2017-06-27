@@ -1,1 +1,49 @@
-login
+<md-card class="login">
+  <md-card-title><h3 class="login__title">Login</h3></md-card-title>
+
+  <md-card-content>
+    <form [formGroup]="form" (submit)="onSubmit()">
+      <md-input-container class="login__input-container">
+        <input
+          mdInput
+          type="text"
+          class="login__control"
+          formControlName="username"
+        >
+        <md-placeholder>Username</md-placeholder>
+        <md-error align="end">{{nameError}}</md-error>
+        <md-hint align="end">{{nameHint}}</md-hint>
+        <md-icon mdPrefix class="login__icon">face</md-icon>
+      </md-input-container>
+
+      <md-input-container class="login__input-container">
+        <input
+          mdInput
+          type="password"
+          class="login__control"
+          formControlName="password"
+        >
+        <md-placeholder>Password</md-placeholder>
+        <md-error align="end">{{passwordError}}</md-error>
+        <md-hint align="end">{{passwordHint}}</md-hint>
+        <md-icon mdPrefix class="login__icon">vpn_key</md-icon>
+      </md-input-container>
+
+      <fieldset *ngIf="!pending; else loader" class="login__action">
+        <button
+          md-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="!form.valid"
+        >LOGIN</button>
+      </fieldset>
+    </form>
+  </md-card-content>
+
+  <ng-template #loader>
+    <md-card-footer>
+      <md-progress-bar mode="indeterminate" color="accent">
+      </md-progress-bar>
+    </md-card-footer>
+  </ng-template>
+</md-card>

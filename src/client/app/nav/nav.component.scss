@@ -1,3 +1,13 @@
 .main-nav {
   flex: 1;
 }
+
+.main-nav,
+.auth-nav {
+  display: flex;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+}

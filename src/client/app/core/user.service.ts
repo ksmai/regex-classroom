@@ -49,7 +49,7 @@ export class UserService {
         .let(retry(3, 401))
         .catch((err: Error|any) => Observable.of(null))
         .subscribe((user: IUser) => {
-          this.user$.next(user);
+          this.updateUser(user);
           this.fetching = false;
         });
     }
@@ -70,7 +70,7 @@ export class UserService {
       .map((res: Response) => res.json().user as IUser)
       .let(retry(3, 401))
       .catch((err: Error|any) => Observable.of(null))
-      .do((user: IUser) => this.user$.next(user))
+      .do((user: IUser) => this.updateUser(user))
       .map((user: IUser) => !!user);
   }
 
@@ -87,7 +87,7 @@ export class UserService {
       .map((res: Response) => res.json().user as IUser)
       .let(retry(3, 401))
       .catch((err: Error|any) => Observable.of(null))
-      .do((user: IUser) => this.user$.next(user))
+      .do((user: IUser) => this.updateUser(user))
       .map((user: IUser) => !!user);
   }
 
@@ -101,7 +101,12 @@ export class UserService {
       .get('/auth/logout')
       .let(retry(3, 401))
       .map(() => true)
-      .catch(() => Observable.of(false));
+      .catch(() => Observable.of(false))
+      .do((success) => {
+        if (success) {
+          this.user$.next(null);
+        }
+      });
   }
 
   /**
@@ -117,11 +122,7 @@ export class UserService {
       .let(retry(3, 401))
       .map((res: Response) => res.json().user as IUser)
       .catch((err: Error|any) => Observable.of(null))
-      .subscribe((user: IUser) => {
-        if (user) {
-          this.user$.next(user);
-        }
-      });
+      .subscribe((user: IUser) => this.updateUser(user));
   }
 
   /**
@@ -151,6 +152,21 @@ export class UserService {
     } else {
       updatedUser = { progress };
     }
-    this.user$.next(updatedUser);
+    this.updateUser(updatedUser);
+  }
+
+  /**
+   * Update the current user, without emptying the progress array in
+   * the process
+   */
+  private updateUser(user: IUser): void {
+    const prevUser = this.user$.getValue();
+    if (!user && !prevUser) {
+      this.user$.next(null);
+    } else if (user) {
+      this.user$.next(user);
+    } else {
+      this.user$.next({ progress: prevUser.progress });
+    }
   }
 }
