@@ -92,6 +92,19 @@ export class UserService {
   }
 
   /**
+   * Basic logout function
+   * @return {Observable<boolean>} whether the logout was successful
+   */
+  logout(): Observable<boolean> {
+    return this
+      .http
+      .get('/auth/logout')
+      .let(retry(3, 401))
+      .map(() => true)
+      .catch(() => Observable.of(false));
+  }
+
+  /**
    * update the progress of a user, authenticated or not
    * If user has not logged in, data will be lost after leaving the app
    * @param {number[]} progress - the whole updated progress array
@@ -109,6 +122,20 @@ export class UserService {
           this.user$.next(user);
         }
       });
+  }
+
+  /**
+   * Check if a username has been registered
+   * @param {string} name - the name to be checked
+   * @return {Observable<boolean>} whether the name is available
+   */
+  isNameAvailable(name: string): Observable<boolean> {
+    return this
+      .http
+      .get(`/auth/name/${name}`)
+      .let(retry(3, 400))
+      .map(() => true)
+      .catch(() => Observable.of(false));
   }
 
   /**
