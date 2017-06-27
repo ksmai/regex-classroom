@@ -29,7 +29,7 @@ export const app = express();
 const sessionConfig = {
   resave: false,
   saveUninitialized: false,
-  secret: process.env.NODE_ENV || 'keyboard cat',
+  secret: process.env.SECRET || 'keyboard cat',
   maxAge: 24 * 60 * 60 * 1000,
 };
 if (process.env.NODE_ENV === 'production') {

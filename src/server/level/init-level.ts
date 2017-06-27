@@ -5,7 +5,7 @@ import { Level } from './level.model';
 import { levels } from './levels';
 
 (mongoose as any).Promise = global.Promise;
-const MONGO_URL = process.env.NODE_ENV ||
+const MONGO_URL = process.env.MONGO_URL ||
   'mongodb://localhost:27017/regex-classroom';
 mongoose
   .connect(MONGO_URL)
