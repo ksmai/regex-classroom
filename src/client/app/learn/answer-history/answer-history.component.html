@@ -3,6 +3,6 @@
     <p>{{history.attempt}}</p>
     <p>{{history.question}}</p>
     <p *ngIf="history.attempt !== history.answer">{{history.answer}}</p>
-    <p *ngIf="history.time > 1000">SLOW</p>
+    <p *ngIf="history.time > 2000">SLOW</p>
   </li>
 </ul>

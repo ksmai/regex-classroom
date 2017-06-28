@@ -1,8 +1,9 @@
 <nav class="map">
   <ul>
-    <li *ngFor="let level of levels">
+    <li *ngFor="let level of levels; let i=index">
       <h4>{{level.name}}</h4>
       <span *ngIf="level.locked; else portals">LOCKED</span>
+      <span *ngIf="scores[i]">{{scores[i]}}</span>
       <ng-template #portals>
         <a [routerLink]="['/revision', level.difficulty]">REVISION</a>
         <a [routerLink]="['/exam', level.difficulty]">EXAM</a>

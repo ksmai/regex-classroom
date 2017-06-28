@@ -18,6 +18,7 @@ interface IMapItem {
 export class MapComponent implements OnInit, OnDestroy {
   user: IUser = { progress: [] };
   levels: IMapItem[] = [];
+  scores: string[] = [];
   private subscription: Subscription;
 
   constructor(
@@ -31,30 +32,51 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const snapshot = this.route.snapshot;
-    const levels = snapshot.data.levels;
     this.subscription = this.userService
       .getUser()
       .subscribe((user: IUser) => {
-        if (user) {
-          this.user = user;
+        this.updateUser(user);
+        this.updateLevels();
+        this.updateScores();
+      });
+  }
+
+  private updateUser(user: IUser): void {
+    if (user) {
+      this.user = user;
+    } else {
+      this.user = { progress: [] };
+    }
+  }
+
+  private updateLevels(): void {
+    this.levels = this.route.snapshot.data.levels
+      .map((level: ILevel) => {
+        return { name: level.name, difficulty: level.difficulty };
+      })
+      .map((item: any, i: number) => {
+        if (i === 0) {
+          item.locked = false;
+        } else if (this.user.progress[i - 1]) {
+          item.locked = false;
         } else {
-          this.user = { progress: [] };
+          item.locked = true;
         }
-        this.levels = levels
-          .map((level: ILevel) => {
-            return { name: level.name, difficulty: level.difficulty };
-          })
-          .map((item: any, i: number) => {
-            if (i === 0) {
-              item.locked = false;
-            } else if (this.user.progress[i - 1]) {
-              item.locked = false;
-            } else {
-              item.locked = true;
-            }
-            return item;
-          });
+        return item;
+      });
+  }
+
+  private updateScores(): void {
+    let nCumulatedTest = 0;
+    this.scores = this.route.snapshot.data.levels
+      .map((level: ILevel, i: number) => {
+        nCumulatedTest += level.tests.length;
+        if (this.user.progress[i] === undefined) {
+          return null;
+        } else {
+          const score = 100 * this.user.progress[i] / nCumulatedTest;
+          return `${score.toFixed(2)}%`;
+        }
       });
   }
 }

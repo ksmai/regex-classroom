@@ -124,11 +124,16 @@ export class CompetitionComponent implements OnInit, OnDestroy {
   }
 
   private randomDelay(): number {
-    return 1000;
+    const difficulty = this.level.difficulty;
+    const mean = 2000 - 100 * difficulty;
+    const spread = 100 + 100 * difficulty;
+    const rand = (Math.random() - 1) * spread + mean;
+    return Math.max(100, rand);
   }
 
   private randomCorrectness(): boolean {
-    return true;
+    const prob = 0.5 + 0.03 * this.level.difficulty;
+    return Math.random() < prob;
   }
 
   private createOpponent(): void {
