@@ -20,4 +20,8 @@ export class ProfileComponent implements OnInit {
   experience(level: number) {
     return Math.round((level % 1) * 100);
   }
+
+  wholeLevel(level: number) {
+    return Math.floor(level);
+  }
 }

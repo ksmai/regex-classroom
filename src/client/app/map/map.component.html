@@ -1,14 +1,42 @@
 <nav class="map">
-  <ul>
-    <li *ngFor="let level of levels; let i=index">
-      <h4>{{level.name}}</h4>
-      <span *ngIf="level.locked; else portals">LOCKED</span>
-      <span *ngIf="scores[i]">{{scores[i]}}</span>
-      <ng-template #portals>
-        <a [routerLink]="['/revision', level.difficulty]">REVISION</a>
-        <a [routerLink]="['/exam', level.difficulty]">EXAM</a>
-        <a [routerLink]="['/competition', level.difficulty]">COMPETITION</a>
-      </ng-template>
+  <ul class="map__list">
+    <li
+      *ngFor="let level of levels; let i=index"
+      class="map__item level"
+      [class.level--locked]="level.locked"
+      [class.level--perfect]="scores[i] === '100%'"
+    >
+      <div class="level__desc">
+        <h4 class="level__name">{{level.name}}</h4>
+        <span
+          *ngIf="scores[i]"
+          class="level__score"
+        >Highscore: {{scores[i]}}</span>
+      </div>
+
+      <div class="level__links">
+        <a
+          [routerLink]="['/revision', level.difficulty]"
+          class="level__link level__link--revision"
+          [class.level__link--locked]="level.locked"
+          mdTooltip="Revision"
+          [mdTooltipShowDelay]="200"
+        ><md-icon>{{level.locked ? 'https' : 'border_color'}}</md-icon></a>
+        <a
+          [routerLink]="['/exam', level.difficulty]"
+          class="level__link level__link--exam"
+          [class.level__link--locked]="level.locked"
+          mdTooltip="Exam"
+          [mdTooltipShowDelay]="200"
+        ><md-icon>{{level.locked ? 'https' : 'assignment_late'}}</md-icon></a>
+        <a
+          [routerLink]="['/competition', level.difficulty]"
+          class="level__link level__link--competition"
+          [class.level__link--locked]="level.locked"
+          mdTooltip="Competition"
+          [mdTooltipShowDelay]="200"
+        ><md-icon>{{level.locked ? 'https': 'group'}}</md-icon></a>
+      </div>
     </li>
   </ul>
 </nav>

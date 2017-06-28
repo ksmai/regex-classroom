@@ -75,7 +75,7 @@ export class MapComponent implements OnInit, OnDestroy {
           return null;
         } else {
           const score = 100 * this.user.progress[i] / nCumulatedTest;
-          return `${score.toFixed(2)}%`;
+          return `${Math.round(score)}%`;
         }
       });
   }
