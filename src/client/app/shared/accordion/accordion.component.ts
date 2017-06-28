@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   HostBinding,
-  Input,
   ViewChild,
 } from '@angular/core';
 

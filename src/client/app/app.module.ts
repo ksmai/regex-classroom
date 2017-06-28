@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { CheatsheetModule } from './cheatsheet/cheatsheet.module';
 import { CoreModule } from './core/core.module';
 import { FooterModule } from './footer/footer.module';
+import { MapModule } from './map/map.module';
 import { NavModule } from './nav/nav.module';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { NavModule } from './nav/nav.module';
     FooterModule,
     AuthModule,
     CheatsheetModule,
+    MapModule,
     AppRoutingModule,
   ],
 

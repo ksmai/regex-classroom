@@ -1,0 +1,13 @@
+<nav class="map">
+  <ul>
+    <li *ngFor="let level of levels">
+      <h4>{{level.name}}</h4>
+      <span *ngIf="level.locked; else portals">LOCKED</span>
+      <ng-template #portals>
+        <a [routerLink]="['/revision', level.difficulty]">REVISION</a>
+        <a [routerLink]="['/exam', level.difficulty]">EXAM</a>
+        <a [routerLink]="['/competition', level.difficulty]">COMPETITION</a>
+      </ng-template>
+    </li>
+  </ul>
+</nav>

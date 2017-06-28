@@ -13,6 +13,7 @@ import { retry } from './http.helper';
 export interface IUser {
   id?: string;
   name?: string;
+  level?: number;
   progress: number[];
 }
 
