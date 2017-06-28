@@ -1,0 +1,8 @@
+<ul>
+  <li *ngFor="let history of histories | slice:0:2">
+    <p>{{history.attempt}}</p>
+    <p>{{history.question}}</p>
+    <p *ngIf="history.attempt !== history.answer">{{history.answer}}</p>
+    <p *ngIf="history.time > 1000">SLOW</p>
+  </li>
+</ul>

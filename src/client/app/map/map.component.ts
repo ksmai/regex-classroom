@@ -34,10 +34,12 @@ export class MapComponent implements OnInit, OnDestroy {
     const snapshot = this.route.snapshot;
     const levels = snapshot.data.levels;
     this.subscription = this.userService
-      .fetchUser()
+      .getUser()
       .subscribe((user: IUser) => {
         if (user) {
           this.user = user;
+        } else {
+          this.user = { progress: [] };
         }
         this.levels = levels
           .map((level: ILevel) => {

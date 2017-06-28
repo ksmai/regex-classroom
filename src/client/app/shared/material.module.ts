@@ -2,12 +2,15 @@ import { NgModule } from '@angular/core';
 import {
   MdButtonModule,
   MdCardModule,
+  MdChipsModule,
+  MdDialogModule,
   MdIconModule,
   MdInputModule,
   MdProgressBarModule,
   MdProgressSpinnerModule,
   MdSnackBarModule,
   MdToolbarModule,
+  MdTooltipModule,
 } from '@angular/material';
 
 const mdModules: any[] = [
@@ -19,6 +22,9 @@ const mdModules: any[] = [
   MdInputModule,
   MdProgressBarModule,
   MdSnackBarModule,
+  MdDialogModule,
+  MdTooltipModule,
+  MdChipsModule,
 ];
 
 @NgModule({

@@ -15,7 +15,6 @@ import { CheatsheetComponent } from './cheatsheet.component';
   ],
 
   exports: [
-    CheatsheetComponent,
   ],
 })
 export class CheatsheetModule {

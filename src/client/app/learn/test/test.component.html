@@ -1,0 +1,4 @@
+<ng-container *ngIf="test">
+  <p>{{test.question}}</p>
+  <input type="text" [(ngModel)]="answer" (keyup)="onKeyup()">
+</ng-container>

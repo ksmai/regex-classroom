@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { IUser, UserService } from '../core/user.service';
@@ -17,6 +18,7 @@ export class NavComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private snackbar: MdSnackBar,
+    private router: Router,
   ) {
   }
 
@@ -39,6 +41,7 @@ export class NavComponent implements OnInit, OnDestroy {
         this.isLoggingOut = false;
         if (success) {
           this.snackbar.open('Bye!', null, { duration: 5000 });
+          this.router.navigate(['/']);
         } else {
           this.snackbar.open('An error has occurred!', 'RETRY', {
             duration: 5000,

@@ -1,0 +1,25 @@
+<h3 md-dialog-title>{{title}}</h3>
+<md-dialog-content>
+  <header>{{header}}</header>
+  <main>
+    <table>
+      <tr>
+        <th>Hits</th>
+        <td>{{nHit}} ({{hitRate}}%)</td>
+      </tr>
+      <tr>
+        <th>Misses</th>
+        <td>{{nMiss}} ({{missRate}}%)</td>
+      </tr>
+      <tr>
+        <th>Response time</th>
+        <td>{{averageTime}}s</td>
+      </tr>
+    </table>
+  </main>
+  <footer>{{footer}}</footer>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-button md-dialog-close>TRY AGAIN</button>
+  <button routerLink="/map" md-button md-dialog-close>BACK TO MAP</button>
+</md-dialog-actions>

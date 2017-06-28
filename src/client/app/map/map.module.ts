@@ -15,7 +15,6 @@ import { MapComponent } from './map.component';
   ],
 
   exports: [
-    MapComponent,
   ],
 })
 export class MapModule {
