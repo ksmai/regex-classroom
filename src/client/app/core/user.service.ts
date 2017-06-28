@@ -110,6 +110,16 @@ export class UserService {
       });
   }
 
+  passExam(difficulty: number, score: number): void {
+    const currentUser = this.user$.getValue();
+    const progress = currentUser ? currentUser.progress : [];
+    if (progress[difficulty] >= score) {
+      return;
+    }
+    progress[difficulty] = score;
+    this.updateProgress(progress);
+  }
+
   /**
    * update the progress of a user, authenticated or not
    * If user has not logged in, data will be lost after leaving the app
