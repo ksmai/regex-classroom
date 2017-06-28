@@ -15,6 +15,7 @@ import { FooterModule } from './footer/footer.module';
 import { LearnModule } from './learn/learn.module';
 import { MapModule } from './map/map.module';
 import { NavModule } from './nav/nav.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { NavModule } from './nav/nav.module';
     CheatsheetModule,
     MapModule,
     LearnModule,
+    ProfileModule,
     AppRoutingModule,
   ],
 

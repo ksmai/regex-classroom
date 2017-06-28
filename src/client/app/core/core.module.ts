@@ -1,6 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
+import { AuthGuard } from './auth-guard.service';
 import { LevelListResolver } from './level-list-resolver.service';
 import { LevelService } from './level.service';
 import { UserService } from './user.service';
@@ -11,6 +12,7 @@ import { UserService } from './user.service';
   ],
 
   providers: [
+    AuthGuard,
     UserService,
     LevelService,
     LevelListResolver,

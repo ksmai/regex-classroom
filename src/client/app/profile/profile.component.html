@@ -1,0 +1,38 @@
+<md-card class="profile" *ngIf="user$ | async as user">
+  <md-card-title><h3 class="profile__title">Profile</h3></md-card-title>
+  <md-card-content class="profile__content">
+    <div class="profile__experience">
+      <md-progress-spinner
+        [value]="experience(user.level)"
+        class="profile__experience-circle">
+      </md-progress-spinner>
+      <span
+        class="profile__experience-number"
+      >{{user.level.toFixed(0)}}</span>
+    </div>
+
+    <div class="profile__details">
+      <table class="profile__table table">
+        <tbody>
+          <tr class="table__row">
+            <th class="table__column table__column--first">Title:</th>
+            <td class="table__column table__column--second">
+              Student
+            </td>
+          </tr>
+          <tr class="table__row">
+            <th class="table__column table__column--first">Name:</th>
+            <td class="table__column table__column--second">
+              {{user.name}}
+            </td>
+          </tr>
+          <tr class="table__row">
+            <th class="table__column table__column--first">Level:</th>
+            <td class="table__column table__column--second">
+              {{user.level.toFixed(1)}}
+            </td>
+          </tr>
+      </table>
+    </div>
+  </md-card-content>
+</md-card>

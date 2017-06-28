@@ -6,7 +6,7 @@
 
   <nav class="auth-nav">
     <ng-container *ngIf="user && user.name; else login">
-      <a md-button>Welcome, {{user.name}}</a>
+      <a md-button routerLink="/profile">Welcome, {{user.name}}</a>
       <button
         md-button
         (click)="logout()"
