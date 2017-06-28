@@ -1,1 +1,8 @@
-competition
+<button (click)="onStart()" *ngIf="!started">START</button>
+
+<ng-container *ngIf="started">
+  <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)"></re-test>
+  <re-answer-history [histories]="histories"></re-answer-history>
+  <p>you: {{playerScore}}</p>
+  <p>opponent: {{opponentScore}}</p>
+</ng-container>
