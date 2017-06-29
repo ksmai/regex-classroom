@@ -12,8 +12,36 @@
   margin: 30px auto;
 }
 
+.competition__question,
 .competition__actions,
 .competition__title,
 .competition__subtitle {
   text-align: center;
 }
+
+.competition__info {
+  display: flex;
+}
+
+.competition__test {
+  flex: 1;
+}
+
+.competition__player,
+.competition__opponent {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.competition__name {
+  text-align: center;
+}
+
+.competition__progress {
+  pointer-events: none;
+  cursor: initial;
+  flex: 1;
+  margin: 8px 0 16px;
+}
+

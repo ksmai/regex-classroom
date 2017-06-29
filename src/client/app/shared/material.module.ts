@@ -8,6 +8,7 @@ import {
   MdInputModule,
   MdProgressBarModule,
   MdProgressSpinnerModule,
+  MdSliderModule,
   MdSnackBarModule,
   MdToolbarModule,
   MdTooltipModule,
@@ -25,6 +26,7 @@ const mdModules: any[] = [
   MdDialogModule,
   MdTooltipModule,
   MdChipsModule,
+  MdSliderModule,
 ];
 
 @NgModule({

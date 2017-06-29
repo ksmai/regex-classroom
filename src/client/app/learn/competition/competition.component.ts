@@ -37,6 +37,7 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
   playerScore: number;
   opponentScore: number;
   opponentSubscription: Subscription;
+  opponentName: string;
 
   constructor(private route: ActivatedRoute, private dialog: MdDialog) {
   }
@@ -66,13 +67,16 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
     }
   }
 
-  onStart(): void {
+  // Alice is slower than Bob, but more accurate
+  // see randomDelay and randomCorrectness for details
+  onStart(name: string = 'Alice'): void {
     this.started = true;
     this.nHit = 0;
     this.nMiss = 0;
     this.totalTime = 0;
     this.playerScore = 0;
     this.opponentScore = 0;
+    this.opponentName = name;
     this.histories = [];
     this.createOpponent();
     this.nextTest();
@@ -168,13 +172,15 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
     const difficulty = this.level.difficulty;
     const mean = 2000 - 100 * difficulty;
     const spread = 100 + 100 * difficulty;
-    const rand = (Math.random() - 1) * spread + mean;
+    const personalFactor = this.opponentName === 'Alice' ? 100 : 0;
+    const rand = (Math.random() - 1) * spread + mean + personalFactor;
     return Math.max(100, rand);
   }
 
   private randomCorrectness(): boolean {
     const prob = 0.5 + 0.03 * this.level.difficulty;
-    return Math.random() < prob;
+    const personalFactor = this.opponentName === 'Alice' ? 0.03 : 0;
+    return Math.random() < prob + personalFactor;
   }
 
   private createOpponent(): void {

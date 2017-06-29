@@ -8,20 +8,65 @@
     </md-card-subtitle>
   </ng-container>
 
-  <md-card-content *ngIf="started">
-    <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)"></re-test>
+  <md-card-content *ngIf="started; else question">
+    <section class="competition__info">
+      <re-test
+        [test]="test"
+        (hit)="onHit($event)"
+        (miss)="onMiss($event)"
+        class="competition__test"
+      ></re-test>
+
+      <section class="competition__player">
+        <h4 class="competition__name">You</h4>
+        <md-slider
+          [max]="100"
+          [min]="0"
+          [step]="10"
+          [value]="playerScore"
+          [vertical]="true"
+          color="primary"
+          class="competition__progress competition__progress--player"
+        ></md-slider>
+      </section>
+
+      <section class="competition__opponent">
+        <h4 class="competition__name">{{opponentName}}</h4>
+        <md-slider
+          [max]="100"
+          [min]="0"
+          [step]="10"
+          [value]="opponentScore"
+          [vertical]="true"
+          [color]="opponentName === 'Alice' ? 'warn' : 'accent'"
+          class="competition__progress competition__progress--opponent"
+        ></md-slider>
+      </section>
+    </section>
+
     <re-answer-history [histories]="histories"></re-answer-history>
-    <p>you: {{playerScore}}</p>
-    <p>opponent: {{opponentScore}}</p>
   </md-card-content>
 
+  <ng-template #question>
+    <md-card-content>
+      <p class="competition__question">Who do you want to play against?</p>
+    </md-card-content>
+  </ng-template>
+
   <md-card-actions class="competition__actions">
-    <button
-      *ngIf="!started; else surrender"
-      (click)="onStart()"
-      md-raised-button
-      color="accent"
-    >START</button>
+    <ng-container *ngIf="!started; else surrender">
+      <button
+        (click)="onStart('Alice')"
+        md-raised-button
+        color="warn"
+      >ALICE</button>
+
+      <button
+        (click)="onStart('Bob')"
+        md-raised-button
+        color="accent"
+      >BOB</button>
+    </ng-container>
 
     <ng-template #surrender>
       <button

@@ -1,0 +1,40 @@
+.content {
+  max-width: 350px;
+  font: 16px/1.5 "Roboto", sans-serif;
+}
+
+.main {
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.table__row {
+  transition: background-color .15s cubic-bezier(.4, 0, .2, 1);
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.table__col {
+  padding: 5px 10px;
+}
+
+.table__col--first {
+  width: 150px;
+  text-align: left;
+}
+
+.table__col--second {
+  text-align: right;
+}
+
+.header {
+  margin-bottom: 10px;
+}
