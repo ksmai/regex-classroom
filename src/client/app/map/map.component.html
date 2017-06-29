@@ -22,21 +22,21 @@
           [class.level__link--locked]="level.locked"
           mdTooltip="Revision"
           [mdTooltipShowDelay]="200"
-        ><md-icon>{{level.locked ? 'https' : 'border_color'}}</md-icon></a>
+        ><md-icon>{{level.locked ? 'lock' : 'border_color'}}</md-icon></a>
         <a
           [routerLink]="['/exam', level.difficulty]"
           class="level__link level__link--exam"
           [class.level__link--locked]="level.locked"
           mdTooltip="Exam"
           [mdTooltipShowDelay]="200"
-        ><md-icon>{{level.locked ? 'https' : 'assignment_late'}}</md-icon></a>
+        ><md-icon>{{level.locked ? 'lock' : 'assignment_late'}}</md-icon></a>
         <a
           [routerLink]="['/competition', level.difficulty]"
           class="level__link level__link--competition"
           [class.level__link--locked]="level.locked"
           mdTooltip="Competition"
           [mdTooltipShowDelay]="200"
-        ><md-icon>{{level.locked ? 'https': 'group'}}</md-icon></a>
+        ><md-icon>{{level.locked ? 'lock': 'group'}}</md-icon></a>
       </div>
     </li>
   </ul>

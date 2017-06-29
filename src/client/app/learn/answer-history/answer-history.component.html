@@ -1,8 +1,11 @@
-<ul>
-  <li *ngFor="let history of histories | slice:0:2">
-    <p>{{history.attempt}}</p>
-    <p>{{history.question}}</p>
-    <p *ngIf="history.attempt !== history.answer">{{history.answer}}</p>
-    <p *ngIf="history.time > 2000">SLOW</p>
+<ul class="answers">
+  <li
+    *ngFor="let history of histories | slice:0:2"
+    class="answer"
+    [class.answer--slow]="history.attempt === history.answer &&
+      history.time > 2000"
+  >
+    <p class="answer__question">{{history.question}}</p>
+    <p class="answer__attempt">{{history.attempt}}</p>
   </li>
 </ul>
