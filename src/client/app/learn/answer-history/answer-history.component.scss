@@ -32,6 +32,10 @@ $lightblue: rgb(160, 199, 242);
   border-right: 1px solid $lightred;
 }
 
+.answer {
+  animation: fade-in .225s linear;
+}
+
 .answer__attempt,
 .answer__question {
   line-height: 1.5;
@@ -72,5 +76,22 @@ $lightblue: rgb(160, 199, 242);
   .answer__question {
     padding-left: 30px;
     padding-right: 10px;
+  }
+
+  .answer__question {
+    font-size: .75em;
+    line-height: 2;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

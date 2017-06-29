@@ -6,6 +6,8 @@
       history.time > 2000"
   >
     <p class="answer__question">{{history.question}}</p>
-    <p class="answer__attempt">{{history.attempt}}</p>
+    <p class="answer__attempt" [reCompareString]="history.answer">
+      {{history.attempt}}
+    </p>
   </li>
 </ul>
