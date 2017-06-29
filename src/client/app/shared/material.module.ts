@@ -6,13 +6,13 @@ import {
   MdDialogModule,
   MdIconModule,
   MdInputModule,
+  MdMenuModule,
   MdProgressBarModule,
   MdProgressSpinnerModule,
   MdSliderModule,
   MdSnackBarModule,
   MdToolbarModule,
   MdTooltipModule,
-  MdMenuModule,
 } from '@angular/material';
 
 const mdModules: any[] = [
