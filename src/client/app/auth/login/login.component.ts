@@ -63,14 +63,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           });
           this.router.navigate(['/']);
         } else {
-          this.snackbar.open('Invalid username/password', 'RETRY', {
+          this.snackbar.open('Invalid username/password', null, {
             duration: 5000,
-          })
-          .onAction()
-          .subscribe(() => {
-            this.pending = true;
-            this.form.disable();
-            setTimeout(() => this.onSubmit(), 1500);
           });
         }
       });
