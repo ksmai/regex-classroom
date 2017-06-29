@@ -5,6 +5,7 @@
       class="map__item level"
       [class.level--locked]="level.locked"
       [class.level--perfect]="scores[i] === '100%'"
+      [class.level--fail]="scores[i] === '0%'"
     >
       <div class="level__desc">
         <h4 class="level__name">{{level.name}}</h4>

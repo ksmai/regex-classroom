@@ -1,8 +1,26 @@
-<button (click)="onStart()" *ngIf="!started">START</button>
+<md-card class="competition">
+  <ng-container *ngIf="!started">
+    <md-card-title>
+      <h3 class="competition__title">Competition</h3>
+    </md-card-title>
+    <md-card-subtitle>
+      <h4 class="competition__subtitle">{{level.name}}</h4>
+    </md-card-subtitle>
+  </ng-container>
 
-<ng-container *ngIf="started">
-  <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)"></re-test>
-  <re-answer-history [histories]="histories"></re-answer-history>
-  <p>you: {{playerScore}}</p>
-  <p>opponent: {{opponentScore}}</p>
-</ng-container>
+  <md-card-content *ngIf="started">
+    <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)"></re-test>
+    <re-answer-history [histories]="histories"></re-answer-history>
+    <p>you: {{playerScore}}</p>
+    <p>opponent: {{opponentScore}}</p>
+  </md-card-content>
+
+  <md-card-actions class="competition__actions">
+    <button
+      *ngIf="!started"
+      (click)="onStart()"
+      md-raised-button
+      color="accent"
+    >START</button>
+  </md-card-actions>
+</md-card>

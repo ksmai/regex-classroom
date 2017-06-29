@@ -1,4 +1,15 @@
-<ng-container *ngIf="test">
-  <p>{{test.question}}</p>
-  <input type="text" [(ngModel)]="answer" (keyup)="onKeyup()">
-</ng-container>
+<section class="question">
+  <p class="question__text">{{test.question}}</p>
+</section>
+
+<md-input-container class="answer">
+  <input
+    mdInput
+    type="text"
+    [(ngModel)]="answer"
+    (keyup)="onKeyup()"
+    class="answer__input"
+    #inputEl
+  >
+  <md-placeholder>Answer</md-placeholder>
+</md-input-container>

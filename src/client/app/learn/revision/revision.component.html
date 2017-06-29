@@ -1,9 +1,33 @@
-<button (click)="onStart()" *ngIf="!started; else stop">START</button>
-<ng-template #stop>
-  <button (click)="onStop()">STOP</button>
-</ng-template>
+<md-card class="revision">
+  <ng-container *ngIf="!started">
+    <md-card-title>
+      <h3 class="revision__title">Revision</h3>
+    </md-card-title>
 
-<ng-container *ngIf="started">
-  <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)"></re-test>
-  <re-answer-history [histories]="histories"></re-answer-history>
-</ng-container>
+    <md-card-subtitle>
+      <h4 class="revision__subtitle">{{level.name}}</h4>
+    </md-card-subtitle>
+  </ng-container>
+
+  <md-card-content *ngIf="started">
+    <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)"></re-test>
+    <re-answer-history [histories]="histories"></re-answer-history>
+  </md-card-content>
+
+  <md-card-actions class="revision__actions">
+    <button
+      (click)="onStart()"
+      *ngIf="!started; else stop"
+      md-raised-button
+      color="accent"
+    >START</button>
+
+    <ng-template #stop>
+      <button
+        md-raised-button
+        color="accent"
+        (click)="onStop()"
+      >STOP</button>
+    </ng-template>
+  </md-card-actions>
+</md-card>

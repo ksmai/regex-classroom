@@ -4,6 +4,7 @@ $blue: rgb(121, 176, 236);
 $grey: rgb(184, 182, 176);
 $purple: #673ab7;
 $orange: rgb(235, 160, 104);
+$deepred: rgb(215, 31, 75);
 
 .map {
   width: 90%;
@@ -13,6 +14,7 @@ $orange: rgb(235, 160, 104);
 .map__item {
   height: 150px;
   margin-bottom: 70px;
+  max-width: 900px;
 }
 
 .level,
@@ -34,8 +36,12 @@ $orange: rgb(235, 160, 104);
   border-color: $purple;
   border-left-width: 15px;
   padding-left: 20px;
-  background-color: #eee;
+  background-color: #f5f5f5;
   border-radius: 0 200px 200px 0;
+
+  &:hover {
+    background-color: #eee;
+  }
 }
 
 .level:nth-child(even) {
@@ -45,6 +51,7 @@ $orange: rgb(235, 160, 104);
   border-radius: 200px 0 0 200px;
   padding-left: 0;
   padding-right: 20px;
+  margin-left: auto;
 
   .level__links {
     flex-direction: row-reverse;
@@ -65,11 +72,24 @@ $orange: rgb(235, 160, 104);
   }
 }
 
+.level--fail {
+  border-color: $deepred;
+
+  .level__name,
+  .level__score {
+    color: $deepred;
+  }
+}
+
 .level--locked {
   border-color: $grey;
 
   .level__name {
     color: $grey;
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
   }
 }
 
@@ -156,7 +176,7 @@ $orange: rgb(235, 160, 104);
   color: rgba(0, 0, 0, .54);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .level:nth-child(n) {
     flex-direction: column;
     border-radius: 16px;

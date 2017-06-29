@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.exam {
+  width: 90%;
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.exam__actions,
+.exam__title,
+.exam__subtitle {
+  text-align: center;
+}

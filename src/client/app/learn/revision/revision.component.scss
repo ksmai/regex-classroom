@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.revision {
+  width: 90%;
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.revision__actions,
+.revision__title,
+.revision__subtitle {
+  text-align: center;
+}
