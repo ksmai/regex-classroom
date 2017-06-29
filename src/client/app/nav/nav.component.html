@@ -5,6 +5,8 @@
       routerLink="/"
       class="logo"
     >^Regex\sClas&#123;2&#125;room$</a>
+  </nav>
+  <nav class="secondary-nav">
     <a md-button routerLink="/cheatsheet">CHEATSHEET</a>
   </nav>
 
@@ -25,5 +27,29 @@
       <a md-button routerLink="/login">LOGIN</a>
       <a md-button routerLink="/signup">SIGNUP</a>
     </ng-template>
+  </nav>
+
+  <nav class="overflow-menu">
+    <md-menu #menu="mdMenu">
+      <button md-menu-item routerLink="/cheatsheet">Cheatsheet</button>
+
+      <ng-container *ngIf="user && user.name; else loginMenu">
+        <button md-menu-item routerLink="/profile">Profile</button>
+        <button
+          md-menu-item
+          (click)="logout()"
+          [disabled]="isLoggingOut"
+        >Logout</button>
+      </ng-container>
+
+      <ng-template #loginMenu>
+        <button md-menu-item routerLink="/login">Login</button>
+        <button md-menu-item routerLink="/signup">Signup</button>
+      </ng-template>
+    </md-menu>
+
+    <button md-icon-button [mdMenuTriggerFor]="menu">
+      <md-icon>more_vert</md-icon>
+    </button>
   </nav>
 </md-toolbar>

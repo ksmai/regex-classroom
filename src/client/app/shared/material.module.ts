@@ -12,6 +12,7 @@ import {
   MdSnackBarModule,
   MdToolbarModule,
   MdTooltipModule,
+  MdMenuModule,
 } from '@angular/material';
 
 const mdModules: any[] = [
@@ -27,6 +28,7 @@ const mdModules: any[] = [
   MdTooltipModule,
   MdChipsModule,
   MdSliderModule,
+  MdMenuModule,
 ];
 
 @NgModule({

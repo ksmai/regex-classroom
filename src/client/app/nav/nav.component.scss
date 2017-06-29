@@ -1,7 +1,8 @@
-.main-nav {
+.secondary-nav {
   flex: 1;
 }
 
+.secondary-nav,
 .main-nav,
 .auth-nav {
   display: flex;
@@ -14,4 +15,23 @@
 
 .logo {
   font-family: "Roboto Mono", monospace;
+}
+
+.overflow-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .secondary-nav,
+  .auth-nav {
+    display: none;
+  }
+
+  .main-nav {
+    flex: 1;
+  }
+
+  .overflow-menu {
+    display: block;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -15,10 +15,11 @@ import { UserService } from '../../core/user.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, AfterViewInit {
   form: FormGroup;
   pending: boolean = false;
   private nameTimeout: any;
+  @ViewChild('nameEl') private nameEl: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,6 +27,10 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private snackbar: MdSnackBar,
   ) {
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.nameEl.nativeElement.focus(), 0);
   }
 
   ngOnInit(): void {

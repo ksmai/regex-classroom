@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
@@ -9,9 +9,10 @@ import { UserService } from '../../core/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   form: FormGroup;
   pending: boolean = false;
+  @ViewChild('nameEl') private nameEl: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -19,6 +20,10 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private snackbar: MdSnackBar,
   ) {
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.nameEl.nativeElement.focus(), 0);
   }
 
   ngOnInit(): void {
