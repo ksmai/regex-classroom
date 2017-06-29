@@ -1,8 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
+import {
+  ICanComponentDeactivate,
+} from '../../core/can-deactivate-guard.service';
 import { ILevel, ITest } from '../../core/level.service';
+import {
+  ConfirmDialogComponent,
+} from '../../shared/confirm-dialog/confirm-dialog.component';
 import { IHistory } from '../answer-history/answer-history.component';
 import {
   SummaryDialogComponent,
@@ -13,7 +20,7 @@ import { ITestPayload } from '../test/test.component';
   templateUrl: './revision.component.html',
   styleUrls: ['./revision.component.scss'],
 })
-export class RevisionComponent implements OnInit {
+export class RevisionComponent implements OnInit, ICanComponentDeactivate {
   level: ILevel;
   test: ITest;
   started: boolean = false;
@@ -32,6 +39,16 @@ export class RevisionComponent implements OnInit {
         this.started = false;
         this.test = null;
       });
+  }
+
+  canDeactivate(): Observable<boolean>|boolean {
+    return !this.started || this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'End revision?',
+        yes: 'END',
+        no: 'BACK',
+      },
+    }).afterClosed();
   }
 
   onStart(): void {
@@ -58,7 +75,6 @@ export class RevisionComponent implements OnInit {
   }
 
   onHit(payload: ITestPayload): void {
-    console.log('correct');
     this.nHit += 1;
     this.totalTime += payload.time;
     this.histories.unshift({
@@ -71,7 +87,6 @@ export class RevisionComponent implements OnInit {
   }
 
   onMiss(payload: ITestPayload): void {
-    console.log('wrong');
     this.nMiss += 1;
     this.totalTime += payload.time;
     this.histories.unshift({

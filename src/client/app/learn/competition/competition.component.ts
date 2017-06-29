@@ -9,7 +9,13 @@ import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import {
+  ICanComponentDeactivate,
+} from '../../core/can-deactivate-guard.service';
 import { ILevel, ITest } from '../../core/level.service';
+import {
+  ConfirmDialogComponent,
+} from '../../shared/confirm-dialog/confirm-dialog.component';
 import { IHistory } from '../answer-history/answer-history.component';
 import {
   SummaryDialogComponent,
@@ -20,7 +26,7 @@ import { ITestPayload } from '../test/test.component';
   templateUrl: './competition.component.html',
   styleUrls: ['./competition.component.scss'],
 })
-export class CompetitionComponent implements OnInit, OnDestroy {
+export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDeactivate {
   level: ILevel;
   test: ITest;
   started: boolean = false;
@@ -41,6 +47,16 @@ export class CompetitionComponent implements OnInit, OnDestroy {
         this.level = data.level;
         this.started = false;
       });
+  }
+
+  canDeactivate(): Observable<boolean>|boolean {
+    return !this.started || this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Surrender?',
+        yes: 'MERCY',
+        no: 'NEVER',
+      },
+    }).afterClosed();
   }
 
   ngOnDestroy(): void {
@@ -66,20 +82,46 @@ export class CompetitionComponent implements OnInit, OnDestroy {
     this.started = false;
     this.opponentSubscription.unsubscribe();
     this.opponentSubscription = null;
+
+    let title: string;
+    let header: string;
+    let footer: string;
+    if (this.playerScore >= 100) {
+      title = 'Congratulations';
+      header = 'You won!';
+      footer = 'Goob job!';
+    } else if (this.opponentScore >= 100) {
+      title = 'What a pity';
+      header = 'It was so close';
+      footer = 'Better luck next time';
+    } else {
+      title = 'Surrendered';
+      header = 'Coward!';
+      footer = 'Suck it up!';
+    }
+
     this.dialog.open(SummaryDialogComponent, {
       data: {
-        title: 'Competition summary',
-        header: this.playerScore > this.opponentScore ? 'WIN' : 'LOSE',
+        title,
+        header,
+        footer,
         nHit: this.nHit,
         nMiss: this.nMiss,
         time: this.totalTime,
-        footer: 'COOL',
       },
     });
   }
 
+  onSurrender(): void {
+    (this.canDeactivate() as Observable<boolean>)
+      .subscribe((answer: boolean) => {
+        if (answer) {
+          this.onStop();
+        }
+      });
+  }
+
   onHit(payload: ITestPayload): void {
-    console.log('correct');
     this.nHit += 1;
     this.totalTime += payload.time;
     this.histories.unshift({
@@ -97,7 +139,6 @@ export class CompetitionComponent implements OnInit, OnDestroy {
   }
 
   onMiss(payload: ITestPayload): void {
-    console.log('wrong');
     this.nMiss += 1;
     this.totalTime += payload.time;
     this.histories.unshift({

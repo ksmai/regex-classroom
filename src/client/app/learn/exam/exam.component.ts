@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
+import {
+  ICanComponentDeactivate,
+} from '../../core/can-deactivate-guard.service';
 import { ILevel, ITest } from '../../core/level.service';
 import { UserService } from '../../core/user.service';
+import {
+  ConfirmDialogComponent,
+} from '../../shared/confirm-dialog/confirm-dialog.component';
 import { IHistory } from '../answer-history/answer-history.component';
 import {
   SummaryDialogComponent,
@@ -14,7 +21,7 @@ import { ITestPayload } from '../test/test.component';
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.scss'],
 })
-export class ExamComponent implements OnInit {
+export class ExamComponent implements OnInit, ICanComponentDeactivate {
   level: ILevel;
   test: ITest;
   started: boolean = false;
@@ -40,6 +47,16 @@ export class ExamComponent implements OnInit {
       });
   }
 
+  canDeactivate(): Observable<boolean>|boolean {
+    return !this.started || this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Flee? Really?',
+        yes: 'FLEE NOW',
+        no: 'CANCEL',
+      },
+    }).afterClosed();
+  }
+
   onStart(): void {
     this.started = true;
     this.nHit = 0;
@@ -53,21 +70,43 @@ export class ExamComponent implements OnInit {
 
   onStop(): void {
     this.started = false;
-    this.userService.passExam(this.level.difficulty, this.nHit);
+
+    const finished = this.testIndex > this.level.tests.length;
+    let header: string;
+    let footer: string;
+    if (finished) {
+      this.userService.passExam(this.level.difficulty, this.nHit);
+      header = this.nHit > 0 ? 'Good job, you passed!' : 'You failed';
+      footer = this.nHit > 0 ?
+        'Time to move on to the next level' :
+        'Practice makes perfect';
+    } else {
+      header = "You flee'd!";
+      footer = "You won't always feel ready. That's why it is brave";
+    }
+
     this.dialog.open(SummaryDialogComponent, {
       data: {
-        title: 'Exam summary',
-        header: 'Good job!',
+        header,
+        footer,
+        title: 'Report',
         nHit: this.nHit,
         nMiss: this.nMiss,
         time: this.totalTime,
-        footer: 'You passed the exam!',
       },
     });
   }
 
+  onFlee(): void {
+    (this.canDeactivate() as Observable<boolean>)
+      .subscribe((answer: boolean) => {
+        if (answer) {
+          this.onStop();
+        }
+      });
+  }
+
   onHit(payload: ITestPayload): void {
-    console.log('correct');
     this.nHit += 1;
     this.totalTime += payload.time;
     this.histories.unshift({
@@ -80,7 +119,6 @@ export class ExamComponent implements OnInit {
   }
 
   onMiss(payload: ITestPayload): void {
-    console.log('wrong');
     this.nMiss += 1;
     this.totalTime += payload.time;
     this.histories.unshift({

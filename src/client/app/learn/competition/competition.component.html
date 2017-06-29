@@ -17,10 +17,18 @@
 
   <md-card-actions class="competition__actions">
     <button
-      *ngIf="!started"
+      *ngIf="!started; else surrender"
       (click)="onStart()"
       md-raised-button
       color="accent"
     >START</button>
+
+    <ng-template #surrender>
+      <button
+        (click)="onSurrender()"
+        md-raised-button
+        color="accent"
+      >SURRENDER</button>
+    </ng-template>
   </md-card-actions>
 </md-card>

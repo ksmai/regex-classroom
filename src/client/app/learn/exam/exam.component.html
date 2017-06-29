@@ -16,9 +16,17 @@
   <md-card-actions class="exam__actions">
     <button
       (click)="onStart()"
-      *ngIf="!started"
+      *ngIf="!started; else flee"
       md-raised-button
       color="accent"
     >START</button>
+
+    <ng-template #flee>
+      <button
+        (click)="onFlee()"
+        md-raised-button
+        color="accent"
+      >FLEE</button>
+    </ng-template>
   </md-card-actions>
 </md-card>

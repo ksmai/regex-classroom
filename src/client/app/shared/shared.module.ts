@@ -5,6 +5,9 @@ import { AccordionComponent } from './accordion/accordion.component';
 import {
   CompareStringDirective,
 } from './compare-string/compare-string.directive';
+import {
+  ConfirmDialogComponent,
+} from './confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from './material.module';
 
 @NgModule({
@@ -16,6 +19,11 @@ import { MaterialModule } from './material.module';
   declarations: [
     AccordionComponent,
     CompareStringDirective,
+    ConfirmDialogComponent,
+  ],
+
+  entryComponents: [
+    ConfirmDialogComponent,
   ],
 
   exports: [
