@@ -1,4 +1,6 @@
-export function ensureLogin(req: any, res: any, next: any) {
+import { NextFunction, Request, Response } from 'express';
+
+export function ensureLogin(req: Request, res: Response, next: NextFunction) {
   if (!req.user) {
     const err = new Error('Only for logged-in users');
     Object.assign(err, { status: 401 });
@@ -9,7 +11,7 @@ export function ensureLogin(req: any, res: any, next: any) {
   next();
 }
 
-export function ensureNotLogin(req: any, res: any, next: any) {
+export function ensureNotLogin(req: Request, res: Response, next: NextFunction) {
   if (req.user) {
     const err = new Error('Not for logged-in users');
     Object.assign(err, { status: 401 });

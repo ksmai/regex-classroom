@@ -6,6 +6,8 @@ import { User } from '../user/user.model';
 import { ensureLogin, ensureNotLogin } from './auth.helper';
 import './passport.config';
 
+// set up authentication routes including signup, login, logout,
+// checking for user identity and username availability
 export const authRouter = express.Router();
 const jsonParser = bodyParser.json();
 authRouter.post('/login',
@@ -21,8 +23,16 @@ authRouter.post('/signup',
   ensureNotLogin,
   jsonParser,
   (req, res, next) => {
+    const { username, password } = req.body;
+    let { progress, badges } = req.body;
+    if (!progress) {
+      progress = [];
+    }
+    if (!badges) {
+      badges = [];
+    }
     (User as any)
-      .signup(req.body.username, req.body.password)
+      .signup(username, password, progress, badges)
       .then((user: any) => {
         req.login(user, (err) => {
           if (err) {
@@ -31,7 +41,7 @@ authRouter.post('/signup',
           res.json({ user });
         });
       })
-      .catch((err: any) => {
+      .catch((err: Error|any) => {
         err.status = 401;
         next(err);
       });
@@ -56,13 +66,18 @@ authRouter.get('/name/:name', (req, res, next) => {
       }
       res.json({});
     })
-    .catch((err: any) => {
+    .catch((err: Error|any) => {
       err.status = 400;
       next(err);
     });
 });
 
-authRouter.use((err: any, req: any, res: any, next: any) => {
+authRouter.use((
+  err: Error|any,
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
   const status = err.status || 401;
   const message = err.message || err.toString();
   res.status(status).json({ error: message });

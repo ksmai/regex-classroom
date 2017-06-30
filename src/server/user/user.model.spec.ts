@@ -99,7 +99,7 @@ describe('User model', () => {
     it('should throw if password does not match', (done) => {
       (User as any)
         .login(user.name, password + '1')
-        .then(() => done.fail(), done());
+        .then(() => done.fail(), done);
     });
   });
 
@@ -109,6 +109,7 @@ describe('User model', () => {
         .getProgress(user._id)
         .then((returnedUser: any) => {
           expect(returnedUser.progress).toEqual(user.progress);
+          expect(returnedUser.badges).toEqual(user.badges);
         })
         .then(done, done.fail);
     });
@@ -130,10 +131,12 @@ describe('User model', () => {
 
     it('should set progress of a user', (done) => {
       const progress = [4, 2, 4, 2];
+      const badges = [6, 6, 7];
       (User as any)
-        .setProgress(user._id, progress)
+        .setProgress(user._id, progress, badges)
         .then((updatedUser: any) => {
           expect(updatedUser.progress).toEqual(progress);
+          expect(updatedUser.badges).toEqual(badges);
         })
         .then(done, done.fail);
     });

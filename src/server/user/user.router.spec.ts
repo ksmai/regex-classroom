@@ -11,10 +11,12 @@ describe('userRouter', () => {
   let getProgressSpy: jasmine.Spy;
   let user: any;
   let progress: number[];
+  let badges: number[];
 
   beforeEach(() => {
     user = testUser('password');
     progress = [1, 2, 3];
+    badges = [3, 2, 1, 0];
     setProgressSpy = spyOn(User as any, 'setProgress')
       .and.returnValue(Promise.resolve(user));
     getProgressSpy = spyOn(User as any, 'getProgress')
@@ -47,12 +49,13 @@ describe('userRouter', () => {
     it('should be able to set progress', (done) => {
       request
         .put('/progress')
-        .send({ progress })
+        .send({ progress, badges })
         .expect(200)
         .expect('Content-Type', /json/)
         .then((res: any) => {
           expect(res.body.user).toEqual(user);
-          expect(setProgressSpy).toHaveBeenCalledWith(user._id, progress);
+          expect(setProgressSpy)
+            .toHaveBeenCalledWith(user._id, progress, badges);
         })
         .then(done, done.fail);
     });
@@ -80,7 +83,7 @@ describe('userRouter', () => {
     it('should be able to set progress', (done) => {
       request
         .put('/progress')
-        .send({ progress })
+        .send({ progress, badges })
         .expect(401)
         .expect('Content-Type', /json/)
         .then((res: any) => {

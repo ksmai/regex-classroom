@@ -1,3 +1,7 @@
+/**
+ * Set up routes related to levels including getters for allLevels and
+ * individual levels
+ */
 import * as express from 'express';
 
 import { Level } from './level.model';
@@ -24,7 +28,12 @@ levelRouter.get('/level/:difficulty', (req, res, next) => {
     });
 });
 
-levelRouter.use((err: any, req: any, res: any, next: any) => {
+levelRouter.use((
+  err: Error|any,
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
   const status = err.status || 400;
   const message = err.message || err.toString();
   res.status(status).json({ error: message });

@@ -3,6 +3,7 @@ import { Strategy } from 'passport-local';
 
 import { User } from '../user/user.model';
 
+// Configure passport with a local strategy
 passport.use(new Strategy(
   (username, password, done) => {
     (User as any)

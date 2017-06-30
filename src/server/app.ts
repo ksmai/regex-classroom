@@ -40,9 +40,12 @@ if (process.env.NODE_ENV === 'production') {
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth', authRouter);
+
+// set up api routes
 app.use('/api/v1', userRouter);
 app.use('/api/v1', levelRouter);
 
+// serve the frontend app
 if (process.env.NODE_ENV === 'production') {
   app.use(require('compression')());
   app.use(require('helmet')());
@@ -68,7 +71,15 @@ if (process.env.NODE_ENV === 'production') {
   app.use(instance);
 }
 
-app.use((err: any, req: any, res: any, next: any) => {
+// error handling
+// This will only handle app-wide errors since individual routers have
+// their own error handlers
+app.use((
+  err: Error|any,
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
   const status = err.status || 500;
   const message = err.message || err.toString();
   res.status(status).json({ error: message });

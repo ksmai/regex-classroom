@@ -14,6 +14,8 @@ describe('authRouter', () => {
   let user: any;
   const username = 'username';
   const password = 'password';
+  const progress = [3];
+  const badges = [6, 7];
 
   describe('Guest', () => {
     beforeEach(() => {
@@ -46,11 +48,12 @@ describe('authRouter', () => {
     it('should be able to signup', (done) => {
       request
         .post('/signup')
-        .send({ username, password })
+        .send({ username, password, progress, badges })
         .expect(200)
         .expect('Content-Type', /json/)
         .then((res: any) => {
-          expect(signupSpy).toHaveBeenCalledWith(username, password);
+          expect(signupSpy)
+            .toHaveBeenCalledWith(username, password, progress, badges);
           expect(res.body.user._id).toEqual(user._id);
         })
         .then(done, done.fail);

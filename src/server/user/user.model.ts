@@ -1,3 +1,4 @@
+/* tslint:disable:no-bitwise */
 import * as bcrypt from 'bcrypt';
 import * as mongoose from 'mongoose';
 
@@ -22,11 +23,22 @@ export const userSchema = new mongoose.Schema({
     required: true,
   },
 
+  // each number represents the highscore in the corresponding level
   progress: {
     type: [Number],
     default: [],
     get: (arr) => arr,
     set: (arr) => arr.map((points: number) => Math.round(points)),
+  },
+
+  // each number represents a collection of badges in the corresponding
+  // level, where the n-th least significant bit represents the n-th
+  // badge
+  badges: {
+    type: [Number],
+    default: [],
+    get: (arr) => arr,
+    set: (arr) => arr.map((points: number) => (points | 0)),
   },
 });
 
@@ -39,7 +51,12 @@ userSchema.virtual('level').get(function() {
   return sum / 10;
 });
 
-userSchema.statics.signup = function(name: string, password: string) {
+userSchema.statics.signup = function(
+  name: string,
+  password: string,
+  progress: number[] = [],
+  badges: number[] = [],
+) {
   if (password.length < 8) {
     return Promise.reject(new Error('Password is too short'));
   } else if (password.length > 30) {
@@ -56,7 +73,7 @@ userSchema.statics.signup = function(name: string, password: string) {
 
       return bcrypt.hash(password, 8);
     })
-    .then((hash: string) => this.create({ name, hash }))
+    .then((hash: string) => this.create({ name, hash, progress, badges }))
     .then(helpers.toObject);
 };
 
@@ -90,8 +107,9 @@ userSchema.statics.getProgress = function(userID: string) {
 userSchema.statics.setProgress = function(
   userID: string,
   progress: number[],
+  badges: number[],
 ) {
-  const updates = { progress };
+  const updates = { progress, badges };
   const options = {
     new: true,
     upsert: false,

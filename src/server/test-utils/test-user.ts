@@ -7,5 +7,6 @@ export function testUser(password: string) {
     name: 'Test User',
     hash: bcrypt.hashSync(password, 8),
     progress: [1, 2, 3, 4],
+    badges: [5, 6, 7],
   };
 }

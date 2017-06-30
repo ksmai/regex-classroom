@@ -1,4 +1,8 @@
 /* tslint:disable:no-console max-line-length */
+/**
+ * This file should be run at least once in any database used by this
+ * app for initializing the data for all levels
+ */
 import * as mongoose from 'mongoose';
 
 import { Level } from './level.model';

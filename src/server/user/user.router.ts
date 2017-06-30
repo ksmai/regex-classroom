@@ -1,3 +1,6 @@
+/**
+ * Set up user-related routes including getter and setter for progress
+ */
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 
@@ -30,8 +33,14 @@ userRouter
         next(err);
         return;
       }
+      if (!req.body.badges) {
+        const err = new Error('No badges specified');
+        Object.assign(err, { status: 400 });
+        next(err);
+        return;
+      }
       (User as any)
-        .setProgress(req.user._id, req.body.progress)
+        .setProgress(req.user._id, req.body.progress, req.body.badges)
         .then((user: any) => res.json({ user }))
         .catch((err: any) => {
           err.status = 400;
@@ -40,7 +49,12 @@ userRouter
     },
   );
 
-userRouter.use((err: any, req: any, res: any, next: any) => {
+userRouter.use((
+  err: Error|any,
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
   const status = err.status || 400;
   const message = err.message || err.toString();
   res.status(status).json({ error: message });
