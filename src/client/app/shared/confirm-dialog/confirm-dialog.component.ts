@@ -12,7 +12,7 @@ export class ConfirmDialogComponent {
   no: string;
 
   constructor(@Inject(MD_DIALOG_DATA) private data: any) {
-    this.title = this.data.title || 'Are you sure?';
+    this.title = this.data.title;
     this.content = this.data.content;
     this.yes = this.data.yes || 'YES';
     this.no = this.data.no || 'NO';

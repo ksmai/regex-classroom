@@ -24,12 +24,13 @@ import { ITestPayload } from '../test/test.component';
 export class ExamComponent implements OnInit, ICanComponentDeactivate {
   level: ILevel;
   test: ITest;
+  shuffledTests: ITest[];
   started: boolean = false;
   nHit: number;
   nMiss: number;
   totalTime: number;
   histories: IHistory[];
-  private testIndex: number;
+  testIndex: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,7 +51,7 @@ export class ExamComponent implements OnInit, ICanComponentDeactivate {
   canDeactivate(): Observable<boolean>|boolean {
     return !this.started || this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Flee? Really?',
+        content: 'Flee? Really?',
         yes: 'FLEE NOW',
         no: 'CANCEL',
       },
@@ -76,9 +77,9 @@ export class ExamComponent implements OnInit, ICanComponentDeactivate {
     let footer: string;
     if (finished) {
       this.userService.passExam(this.level.difficulty, this.nHit);
-      header = this.nHit > 0 ? 'Good job, you passed!' : 'You failed';
+      header = this.nHit > 0 ? 'Well done, you passed!' : 'You failed';
       footer = this.nHit > 0 ?
-        'Time to move on to the next level' :
+        'Get ready for the next level' :
         'Practice makes perfect';
     } else {
       header = "You flee'd!";
@@ -131,7 +132,7 @@ export class ExamComponent implements OnInit, ICanComponentDeactivate {
   }
 
   private nextTest(): void {
-    const nextTest = this.level.tests[this.testIndex];
+    const nextTest = this.shuffledTests[this.testIndex];
     this.testIndex += 1;
     if (nextTest) {
       this.test = nextTest;
@@ -146,6 +147,6 @@ export class ExamComponent implements OnInit, ICanComponentDeactivate {
       const j: number = Math.floor(Math.random() * (tests.length - i)) + i;
       [tests[i], tests[j]] = [tests[j], tests[i]];
     }
-    this.level.tests = tests;
+    this.shuffledTests = tests;
   }
 }

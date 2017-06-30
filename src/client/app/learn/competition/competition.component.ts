@@ -58,7 +58,7 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
   canDeactivate(): Observable<boolean>|boolean {
     return !this.started || this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Surrender?',
+        content: 'Surrender?',
         yes: 'MERCY',
         no: 'NEVER',
       },

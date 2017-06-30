@@ -44,7 +44,7 @@ export class RevisionComponent implements OnInit, ICanComponentDeactivate {
   canDeactivate(): Observable<boolean>|boolean {
     return !this.started || this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'End revision?',
+        content: 'End revision?',
         yes: 'END',
         no: 'BACK',
       },

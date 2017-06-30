@@ -1,6 +1,11 @@
+.dialog__title {
+  font-weight: 700;
+}
+
 .content {
   max-width: 350px;
   font: 16px/1.5 "Roboto", sans-serif;
+  color: rgba(0, 0, 0, .54);
 }
 
 .main {
@@ -19,6 +24,7 @@
 
   &:hover {
     background-color: #eee;
+    color: rgba(0, 0, 0, .87);
   }
 }
 
@@ -37,4 +43,9 @@
 
 .header {
   margin-bottom: 10px;
+}
+
+.dialog__button {
+  color: #673ab7;
+  font-weight: 700;
 }

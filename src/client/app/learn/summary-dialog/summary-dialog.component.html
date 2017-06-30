@@ -1,4 +1,4 @@
-<h3 md-dialog-title>{{title}}</h3>
+<h3 md-dialog-title class="dialog__title">{{title}}</h3>
 <md-dialog-content class="content">
   <header class="header">{{header}}</header>
   <main class="main">
@@ -26,6 +26,15 @@
   <footer class="footer">{{footer}}</footer>
 </md-dialog-content>
 <md-dialog-actions align="end">
-  <button md-button md-dialog-close>TRY AGAIN</button>
-  <button routerLink="/map" md-button md-dialog-close>BACK TO MAP</button>
+  <button
+    md-button
+    md-dialog-close
+    class="dialog__button"
+  >TRY AGAIN</button>
+  <button
+    routerLink="/map"
+    md-button
+    md-dialog-close
+    class="dialog__button"
+  >BACK TO MAP</button>
 </md-dialog-actions>

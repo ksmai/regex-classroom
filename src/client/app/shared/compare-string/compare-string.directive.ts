@@ -17,7 +17,7 @@ import {
 })
 export class CompareStringDirective implements OnChanges {
   @Input() reCompareString: string = '';
-  @Input() matchColor: string = 'rgb(85, 166, 159)';
+  @Input() matchColor: string = 'rgb(0, 150, 152)';
   @Input() wrongColor: string = 'rgb(215, 31, 75)';
 
   constructor(private el: ElementRef) {

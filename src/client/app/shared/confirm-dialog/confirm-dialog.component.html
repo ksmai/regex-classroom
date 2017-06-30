@@ -1,6 +1,16 @@
-<h3 md-dialog-title>{{title}}</h3>
-<md-dialog-content>{{content}}</md-dialog-content>
+<h3 md-dialog-title *ngIf="title">{{title}}</h3>
+<md-dialog-content class="dialog__content">{{content}}</md-dialog-content>
 <md-dialog-actions>
-  <button type="button" md-button [md-dialog-close]="false">{{no}}</button>
-  <button type="button" md-button [md-dialog-close]="true">{{yes}}</button>
+  <button
+    type="button"
+    md-button
+    [md-dialog-close]="false"
+    class="dialog__button"
+  >{{no}}</button>
+  <button
+    type="button"
+    md-button
+    [md-dialog-close]="true"
+    class="dialog__button"
+  >{{yes}}</button>
 </md-dialog-actions>

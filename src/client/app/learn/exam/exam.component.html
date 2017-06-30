@@ -1,5 +1,5 @@
 <md-card class="exam">
-  <ng-container *ngIf="!started">
+  <ng-container *ngIf="!started; else examStarted">
     <md-card-title>
       <h3 class="exam__title">Exam</h3>
     </md-card-title>
@@ -8,10 +8,16 @@
     </md-card-subtitle>
   </ng-container>
 
-  <md-card-content *ngIf="started">
-    <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)"></re-test>
-    <re-answer-history [histories]="histories"></re-answer-history>
-  </md-card-content>
+  <ng-template #examStarted>
+    <md-card-content>
+      <re-test [test]="test" (hit)="onHit($event)" (miss)="onMiss($event)">
+        <span class="exam__number">
+          {{testIndex}} / {{level.tests.length}}
+        </span>
+      </re-test>
+      <re-answer-history [histories]="histories"></re-answer-history>
+    </md-card-content>
+  </ng-template>
 
   <md-card-actions class="exam__actions">
     <button
@@ -25,7 +31,7 @@
       <button
         (click)="onFlee()"
         md-raised-button
-        color="accent"
+        color="warn"
       >FLEE</button>
     </ng-template>
   </md-card-actions>

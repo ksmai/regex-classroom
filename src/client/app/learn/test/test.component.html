@@ -1,4 +1,4 @@
-<section class="question">
+<section class="question" #questionEl>
   <p class="question__text">{{test.question}}</p>
 </section>
 
@@ -13,4 +13,5 @@
   >
   <md-placeholder>Answer</md-placeholder>
   <md-icon mdSuffix>edit</md-icon>
+  <span mdPrefix><ng-content></ng-content></span>
 </md-input-container>

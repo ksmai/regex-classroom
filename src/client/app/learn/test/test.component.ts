@@ -15,6 +15,12 @@ export interface ITestPayload {
   answer: string;
 }
 
+/**
+ * The component responsible for displaying a question and
+ * receiving the answer. It also determines the correctness of
+ * the answer received and emits the received answer and elapsed time
+ * accordingly
+ */
 @Component({
   selector: 're-test',
   templateUrl: './test.component.html',
@@ -28,6 +34,7 @@ export class TestComponent implements OnChanges, AfterViewInit {
   answer: string;
 
   @ViewChild('inputEl') private inputEl: any;
+  @ViewChild('questionEl') private questionEl: any;
 
   ngAfterViewInit(): void {
     setTimeout(() => this.inputEl.nativeElement.focus(), 0);
@@ -37,6 +44,10 @@ export class TestComponent implements OnChanges, AfterViewInit {
     if (this.test) {
       this.startTime = Date.now();
       this.answer = '';
+
+      if (this.questionEl) {
+        this.questionEl.nativeElement.scrollIntoView();
+      }
     }
   }
 
