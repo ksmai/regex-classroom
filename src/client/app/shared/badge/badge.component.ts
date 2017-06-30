@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, HostBinding, Input, OnChanges } from '@angular/core';
 
 /**
  * A simple wrapper around the badge svg with some stylings
@@ -11,6 +11,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 export class BadgeComponent implements OnChanges {
   @Input() level: number;
   @Input() type: string;
+  @HostBinding('class.locked') @Input() locked: boolean;
   fgColor: string = '#fff';
   bgColor: string = '#333';
   tooltip: string = 'Badge';
@@ -33,6 +34,9 @@ export class BadgeComponent implements OnChanges {
   }
 
   private getFgColor(): string {
+    if (this.locked) {
+      return '#b8b6b0';
+    }
     switch (this.type) {
       case 'a':
         return '#f44336';
@@ -44,9 +48,12 @@ export class BadgeComponent implements OnChanges {
   }
 
   private getBgColor(): string {
+    if (this.locked) {
+      return '#b8b6b0';
+    }
     switch (this.level) {
       case 0:
-        return 'rgb(0, 59, 255)';
+        return 'rgb(165, 199, 236)';
       case 1:
         return 'rgb(180, 161, 211)';
       case 2:

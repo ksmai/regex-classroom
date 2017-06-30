@@ -92,6 +92,7 @@ export class MapComponent implements OnInit, OnDestroy {
         for (let j = 0; j < this.badgesPerLevel; j++) {
           badges.push(!!((badgeGroup >>> j) & 1));
         }
+        return badges;
       });
   }
 }

@@ -7,6 +7,21 @@
       [class.level--perfect]="scores[i] === '100%'"
       [class.level--fail]="scores[i] === '0%'"
     >
+      <div class="level__badges">
+        <re-badge
+          [locked]="!badges[i][0]"
+          [level]="i"
+          type="a"
+          class="level__badge"
+        ></re-badge>
+        <re-badge
+          [locked]="!badges[i][1]"
+          [level]="i"
+          type="b"
+          class="level__badge"
+        ></re-badge>
+      </div>
+
       <div class="level__desc">
         <h4 class="level__name">{{level.name}}</h4>
         <span

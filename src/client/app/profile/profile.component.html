@@ -1,43 +1,58 @@
-<md-card class="profile" *ngIf="user$ | async as user">
-  <md-card-title><h3 class="profile__title">Profile</h3></md-card-title>
-  <md-card-content class="profile__content">
-    <div
-      class="profile__experience"
-      [mdTooltip]="'Score ' + (100 - experience(user.level)) +
-        ' more points in exams to level up!'"
-      [mdTooltipShowDelay]="200"
-    >
-      <md-progress-spinner
-        [value]="experience(user.level)"
-        class="profile__experience-circle">
-      </md-progress-spinner>
-      <span
-        class="profile__experience-number"
-      >{{wholeLevel(user.level)}}</span>
-    </div>
+<ng-container *ngIf="user$ | async as user">
+  <md-card class="profile">
+    <md-card-title><h3 class="profile__title">Profile</h3></md-card-title>
+    <md-card-content class="profile__content">
+      <div
+        class="profile__experience"
+        [mdTooltip]="'Score ' + (100 - experience(user.level)) +
+          ' more points in exams to level up!'"
+        [mdTooltipShowDelay]="200"
+      >
+        <md-progress-spinner
+          [value]="experience(user.level)"
+          class="profile__experience-circle">
+        </md-progress-spinner>
+        <span
+          class="profile__experience-number"
+        >{{wholeLevel(user.level)}}</span>
+      </div>
 
-    <div class="profile__details">
-      <table class="profile__table table">
-        <tbody>
-          <tr class="table__row">
-            <th class="table__column table__column--first">Title:</th>
-            <td class="table__column table__column--second">
-              Student
-            </td>
-          </tr>
-          <tr class="table__row">
-            <th class="table__column table__column--first">Name:</th>
-            <td class="table__column table__column--second">
-              {{user.name}}
-            </td>
-          </tr>
-          <tr class="table__row">
-            <th class="table__column table__column--first">Level:</th>
-            <td class="table__column table__column--second">
-              {{user.level.toFixed(1)}}
-            </td>
-          </tr>
-      </table>
-    </div>
-  </md-card-content>
-</md-card>
+      <div class="profile__details">
+        <table class="profile__table table">
+          <tbody>
+            <tr class="table__row">
+              <th class="table__column table__column--first">Title:</th>
+              <td class="table__column table__column--second">
+                Student
+              </td>
+            </tr>
+            <tr class="table__row">
+              <th class="table__column table__column--first">Name:</th>
+              <td class="table__column table__column--second">
+                {{user.name}}
+              </td>
+            </tr>
+            <tr class="table__row">
+              <th class="table__column table__column--first">Level:</th>
+              <td class="table__column table__column--second">
+                {{user.level.toFixed(1)}}
+              </td>
+            </tr>
+        </table>
+      </div>
+    </md-card-content>
+  </md-card>
+
+  <div class="badges">
+    <ng-container *ngFor="let badge of user.badges; let i=index">
+      <ng-container *ngFor="let type of ['a', 'b']; let j=index">
+        <re-badge
+          *ngIf="hasBadge(badge, j)"
+          class="badge"
+          [level]="i"
+          [type]="type"
+        ></re-badge>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

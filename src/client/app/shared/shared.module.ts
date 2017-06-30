@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { BadgeComponent } from './badge/badge.component';
 import { AccordionComponent } from './accordion/accordion.component';
+import { BadgeComponent } from './badge/badge.component';
 import {
   CompareStringDirective,
 } from './compare-string/compare-string.directive';

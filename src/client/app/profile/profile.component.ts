@@ -1,3 +1,4 @@
+/* tslint:disable:no-bitwise */
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -23,5 +24,9 @@ export class ProfileComponent implements OnInit {
 
   wholeLevel(level: number) {
     return Math.floor(level);
+  }
+
+  hasBadge(collection: number, idx: number): boolean {
+    return !!((collection >>> idx) & 1);
   }
 }

@@ -20,7 +20,7 @@
   fill: #333;
 }
 
-.badge__inner-ribbon {
+.badge__outer-ribbon {
   stroke-width: 5;
   stroke: #666;
   fill: #666;
@@ -32,4 +32,14 @@
 
 .badge__background {
   stroke-width: 15;
+}
+
+:host(.locked) {
+  pointer-events: none;
+
+  .badge__outer-ribbon,
+  .badge__inner-ribbon {
+    stroke: #b8b6b0;
+    fill: #b8b6b0;
+  }
 }

@@ -67,3 +67,17 @@
     background-color: #eee;
   }
 }
+
+.badges {
+  width: 400px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 20px auto;
+}
+
+.badge {
+  margin: 10px 20px;
+}
