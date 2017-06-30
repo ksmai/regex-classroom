@@ -29,6 +29,9 @@ export class SignupComponent implements OnInit, AfterViewInit {
   ) {
   }
 
+  /**
+   * Simulates autofocus since it does not work with angular material
+   */
   ngAfterViewInit(): void {
     setTimeout(() => this.nameEl.nativeElement.focus(), 0);
   }
@@ -69,14 +72,14 @@ export class SignupComponent implements OnInit, AfterViewInit {
     this.userService
       .signup(username, password)
       .subscribe((success: boolean) => {
-        this.pending = false;
-        this.form.enable();
         if (success) {
           this.snackbar.open(`Welcome, ${username}!`, null, {
             duration: 5000,
           });
           this.router.navigate(['/']);
         } else {
+          this.pending = false;
+          this.form.enable();
           this.snackbar.open('An error has occurred!', 'RETRY', {
             duration: 5000,
           })
@@ -168,6 +171,9 @@ export class SignupComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * A validator for the password fields
+   */
   private passwordMatch(formGroup: FormGroup): ValidationErrors {
     const password = formGroup.get('password').value;
     const confirmPassword = formGroup.get('confirmPassword').value;
@@ -180,6 +186,11 @@ export class SignupComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * An async validator for the name field that hits the server
+   * and checks for the availability of the username
+   * Debounced manually to avoid sending too many requests
+   */
   private nameAvailable(control: FormControl): Promise<ValidationErrors> {
     clearTimeout(this.nameTimeout);
     return new Promise((resolve) => {

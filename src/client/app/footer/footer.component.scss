@@ -2,3 +2,12 @@
   flex: 1;
   text-align: center;
 }
+
+/**
+ * This compensates the whitespace difference in the production build
+ * because of the settings of HTML minifier
+ */
+.icon {
+  margin-left: .2em;
+  margin-right: .2em;
+}

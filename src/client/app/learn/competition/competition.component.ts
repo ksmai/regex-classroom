@@ -13,6 +13,7 @@ import {
   ICanComponentDeactivate,
 } from '../../core/can-deactivate-guard.service';
 import { ILevel, ITest } from '../../core/level.service';
+import { UserService } from '../../core/user.service';
 import {
   ConfirmDialogComponent,
 } from '../../shared/confirm-dialog/confirm-dialog.component';
@@ -39,7 +40,11 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
   opponentSubscription: Subscription;
   opponentName: string;
 
-  constructor(private route: ActivatedRoute, private dialog: MdDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MdDialog,
+    private userService: UserService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -83,6 +88,9 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
   }
 
   onStop(): void {
+    if (!this.started) {
+      return;
+    }
     this.started = false;
     this.opponentSubscription.unsubscribe();
     this.opponentSubscription = null;
@@ -91,17 +99,20 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
     let header: string;
     let footer: string;
     if (this.playerScore >= 100) {
+      const difficulty = this.level.difficulty;
+      const opponentIndex = this.opponentName === 'Alice' ? 0 : 1;
+      this.userService.winCompetition(difficulty, opponentIndex);
       title = 'Congratulations';
       header = 'You won!';
       footer = 'Goob job!';
     } else if (this.opponentScore >= 100) {
-      title = 'What a pity';
-      header = 'It was so close';
+      title = 'Aww';
+      header = 'It was a close game';
       footer = 'Better luck next time';
     } else {
       title = 'Surrendered';
       header = 'Coward!';
-      footer = 'Suck it up!';
+      footer = 'Suck it up! You can do it!';
     }
 
     this.dialog.open(SummaryDialogComponent, {

@@ -1,3 +1,4 @@
+/* tslint:disable:no-bitwise */
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/observable/of';
@@ -15,6 +16,7 @@ export interface IUser {
   name?: string;
   level?: number;
   progress: number[];
+  badges: number[];
 }
 
 @Injectable()
@@ -76,15 +78,19 @@ export class UserService {
   }
 
   /**
-   * Basic signup function
+   * Signup with the current progress/badges earned, if any
    * @param {string} username
    * @param {string} password
    * @return {Observable<boolean>} whether the signup was successful
    */
   signup(username: string, password: string): Observable<boolean> {
+    const currentUser = this.user$.getValue();
+    const progress = (currentUser && currentUser.progress) || [];
+    const badges = (currentUser && currentUser.badges) || [];
+
     return this
       .http
-      .post('/auth/signup', { username, password })
+      .post('/auth/signup', { username, password, progress, badges })
       .map((res: Response) => res.json().user as IUser)
       .let(retry(3, 401))
       .catch((err: Error|any) => Observable.of(null))
@@ -93,7 +99,7 @@ export class UserService {
   }
 
   /**
-   * Basic logout function
+   * Logout and clear all data in the app
    * @return {Observable<boolean>} whether the logout was successful
    */
   logout(): Observable<boolean> {
@@ -110,14 +116,44 @@ export class UserService {
       });
   }
 
+  /**
+   * Update progress if the user gets a higher score than before
+   * @param {number} difficulty - difficulty level of the exam
+   * @param {number} score - the score user gets in the exam
+   */
   passExam(difficulty: number, score: number): void {
     const currentUser = this.user$.getValue();
-    const progress = currentUser ? currentUser.progress : [];
+    const progress = (currentUser && currentUser.progress) || [];
+    const badges = (currentUser && currentUser.badges) || [];
     if (progress[difficulty] >= score) {
       return;
     }
     progress[difficulty] = score;
-    this.updateProgress(progress);
+    this.updateProgress(progress, badges);
+  }
+
+  /**
+   * Update badges of the user, if it is a new one
+   * Note that the badges array stores numbers, where each number
+   * represents a collection of badges at the corresponding level,
+   * and the n-th least significant bit represents the n-th badge at that
+   * level
+   * @param {number} difficulty - difficulty level of the exam
+   * @param {number} opponent - zero-based opponent index, 1-to-1 correspond
+   *                            to the badges
+   */
+  winCompetition(difficulty: number, opponent: number): void {
+    const currentUser = this.user$.getValue();
+    const progress = (currentUser && currentUser.progress) || [];
+    const badges = (currentUser && currentUser.badges) || [];
+    if (badges[difficulty] && (badges[difficulty] >>> opponent) & 1) {
+      return;
+    }
+    if (!badges[difficulty]) {
+      badges[difficulty] = 0;
+    }
+    badges[difficulty] |= (1 << opponent);
+    this.updateProgress(progress, badges);
   }
 
   /**
@@ -125,11 +161,11 @@ export class UserService {
    * If user has not logged in, data will be lost after leaving the app
    * @param {number[]} progress - the whole updated progress array
    */
-  updateProgress(progress: number[]): void {
-    this.optimisticUpdate(progress);
+  updateProgress(progress: number[], badges: number[]): void {
+    this.optimisticUpdate(progress, badges);
     this
       .http
-      .put('/api/v1/progress', { progress })
+      .put('/api/v1/progress', { progress, badges })
       .let(retry(3, 401))
       .map((res: Response) => res.json().user as IUser)
       .catch((err: Error|any) => Observable.of(null))
@@ -155,13 +191,13 @@ export class UserService {
    * data is persisted in the server
    * @param {number[]} progress - the whole updated progress array
    */
-  private optimisticUpdate(progress: number[]): void {
+  private optimisticUpdate(progress: number[], badges: number[]): void {
     const currentUser = this.user$.getValue();
     let updatedUser: IUser;
     if (currentUser) {
-      updatedUser = Object.assign({}, currentUser, { progress });
+      updatedUser = Object.assign({}, currentUser, { progress, badges });
     } else {
-      updatedUser = { progress };
+      updatedUser = { progress, badges };
     }
     this.updateUser(updatedUser);
   }
@@ -177,7 +213,10 @@ export class UserService {
     } else if (user) {
       this.user$.next(user);
     } else {
-      this.user$.next({ progress: prevUser.progress });
+      this.user$.next({
+        progress: prevUser.progress,
+        badges: prevUser.badges,
+      });
     }
   }
 }

@@ -1,3 +1,4 @@
+/* tslint:disable:no-bitwise */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
@@ -16,9 +17,11 @@ interface IMapItem {
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, OnDestroy {
-  user: IUser = { progress: [] };
+  user: IUser = { progress: [], badges: [] };
   levels: IMapItem[] = [];
   scores: string[] = [];
+  badges: number[][] = [];
+  badgesPerLevel: number = 2;
   private subscription: Subscription;
 
   constructor(
@@ -38,6 +41,7 @@ export class MapComponent implements OnInit, OnDestroy {
         this.updateUser(user);
         this.updateLevels();
         this.updateScores();
+        this.updateBadges();
       });
   }
 
@@ -45,7 +49,7 @@ export class MapComponent implements OnInit, OnDestroy {
     if (user) {
       this.user = user;
     } else {
-      this.user = { progress: [] };
+      this.user = { progress: [], badges: [] };
     }
   }
 
@@ -76,6 +80,17 @@ export class MapComponent implements OnInit, OnDestroy {
         } else {
           const score = 100 * this.user.progress[i] / nCumulatedTest;
           return `${Math.round(score)}%`;
+        }
+      });
+  }
+
+  private updateBadges(): void {
+    this.badges = this.route.snapshot.data.levels
+      .map((level: ILevel, i: number) => {
+        const badgeGroup = this.user.badges[i] || 0;
+        const badges: boolean[] = [];
+        for (let j = 0; j < this.badgesPerLevel; j++) {
+          badges.push(!!((badgeGroup >>> j) & 1));
         }
       });
   }
