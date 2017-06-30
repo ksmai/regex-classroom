@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { BadgeComponent } from './badge/badge.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import {
   CompareStringDirective,
@@ -18,6 +19,7 @@ import { MaterialModule } from './material.module';
 
   declarations: [
     AccordionComponent,
+    BadgeComponent,
     CompareStringDirective,
     ConfirmDialogComponent,
   ],
@@ -30,6 +32,7 @@ import { MaterialModule } from './material.module';
     CommonModule,
     MaterialModule,
     AccordionComponent,
+    BadgeComponent,
     CompareStringDirective,
   ],
 })
