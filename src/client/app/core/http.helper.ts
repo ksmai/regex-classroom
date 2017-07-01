@@ -6,6 +6,18 @@ import 'rxjs/add/operator/retryWhen';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 
+/**
+ * A helper function for retrying http requests on error. There is
+ * a one-second delay between retries by default
+ * @param {number} times - maximum number of retries
+ * @param {number[]} ...badStatusCodes - the status codes that, when
+ * occur, stop retrying immediately
+ * @return {function} a function to be used in the subscribe chain
+ *
+ * @example
+ * // retry at most 3 times but stop immediately if hitting 400/401
+ * src.let(retry(3, 400, 401)).subscribe( ... );
+ */
 export function retry(times: number, ...badStatusCodes: number[]) {
   return <T>(src: Observable<T>): Observable<T> => {
     return src

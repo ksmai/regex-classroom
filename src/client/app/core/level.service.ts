@@ -22,6 +22,10 @@ export interface ILevel {
   tests: ITest[];
 }
 
+/**
+ * Utilities for fetching data about a list of levels or a particular
+ * level
+ */
 @Injectable()
 export class LevelService {
   private levels: ILevel[];

@@ -4,6 +4,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { ILevel, LevelService } from './level.service';
 
+/**
+ * Resolves level data. See {@link LevelService} for details
+ */
 @Injectable()
 export class LevelListResolver implements Resolve<ILevel[]> {
   constructor(private levelService: LevelService) {

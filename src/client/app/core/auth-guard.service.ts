@@ -7,6 +7,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { UserService } from './user.service';
 
+/**
+ * Allows routing to a certain component if and only if user is logged
+ * in. Redirects the user otherwise
+ */
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private userService: UserService, private router: Router) {
