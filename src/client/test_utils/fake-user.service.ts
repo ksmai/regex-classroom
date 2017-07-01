@@ -9,4 +9,16 @@ export class FakeUserService {
   fetchUser(): Observable<any> {
     return this.user$.asObservable();
   }
+
+  login() {
+    return;
+  }
+
+  signup() {
+    return;
+  }
+
+  isNameAvailable() {
+    return;
+  }
 }

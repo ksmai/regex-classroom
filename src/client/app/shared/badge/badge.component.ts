@@ -14,7 +14,7 @@ export class BadgeComponent implements OnChanges {
   @HostBinding('class.locked') @Input() locked: boolean;
   fgColor: string = '#fff';
   bgColor: string = '#333';
-  tooltip: string = 'Badge';
+  tooltip: string = 'A badge';
 
   ngOnChanges(): void {
     this.fgColor = this.getFgColor();

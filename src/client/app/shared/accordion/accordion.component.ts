@@ -5,6 +5,16 @@ import {
   ViewChild,
 } from '@angular/core';
 
+/**
+ * A simple accordion component that can be toggled between
+ * open/close with some animations
+ *
+ * @example
+ * <re-accordion>
+ *   <h3 accordionToggle>A title that is used as the toggle</h3>
+ *   <p>Some content here that will hide/show on toggle</p>
+ * </re-accordion>
+ */
 @Component({
   selector: 're-accordion',
   templateUrl: './accordion.component.html',
