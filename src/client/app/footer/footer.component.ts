@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * A footer for showing copyright information
+ */
 @Component({
   selector: 're-footer',
   templateUrl: './footer.component.html',

@@ -10,7 +10,15 @@ export class FakeUserService {
     return this.user$.asObservable();
   }
 
+  getUser() {
+    return this.fetchUser();
+  }
+
   login() {
+    return;
+  }
+
+  logout() {
     return;
   }
 

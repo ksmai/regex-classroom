@@ -5,6 +5,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { ILevel } from '../core/level.service';
 
+/**
+ * Display all the levels, with their questions/answers
+ */
 @Component({
   templateUrl: './cheatsheet.component.html',
   styleUrls: ['./cheatsheet.component.scss'],

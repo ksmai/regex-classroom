@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 
 import { UserService } from '../../core/user.service';
 
+/**
+ * Renders the signup form and handles validation logic
+ */
 @Component({
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],

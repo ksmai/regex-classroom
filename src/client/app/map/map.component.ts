@@ -12,6 +12,10 @@ interface IMapItem {
   locked: boolean;
 }
 
+/**
+ * Renders the sitemap for navigating to different levels and showing
+ * user progress on each level
+ */
 @Component({
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
@@ -20,7 +24,7 @@ export class MapComponent implements OnInit, OnDestroy {
   user: IUser = { progress: [], badges: [] };
   levels: IMapItem[] = [];
   scores: string[] = [];
-  badges: number[][] = [];
+  badges: boolean[][] = [];
   badgesPerLevel: number = 2;
   private subscription: Subscription;
 

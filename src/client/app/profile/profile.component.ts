@@ -4,6 +4,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { IUser, UserService } from '../core/user.service';
 
+/**
+ * Renders the user profile
+ */
 @Component({
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],

@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 
 import { UserService } from '../../core/user.service';
 
+/**
+ * Renders the login form and handles validation logic
+ */
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
