@@ -235,7 +235,7 @@ export const levels = [
       },
       {
         question: "Match 'a' but do not remember the match",
-        answer: '(?:x)',
+        answer: '(?:a)',
       },
       {
         question: 'A back reference to the last substring matching the first parenthetical in the regex',
