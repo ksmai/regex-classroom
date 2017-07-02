@@ -13,6 +13,9 @@ import { Observable } from 'rxjs/Observable';
 import { ILevel, LevelService } from '../core/level.service';
 import { IUser, UserService } from '../core/user.service';
 
+/**
+ * Guarding the learn routes based on user progress on previous level
+ */
 @Injectable()
 export class CanLearnGuard implements CanActivate {
   constructor(

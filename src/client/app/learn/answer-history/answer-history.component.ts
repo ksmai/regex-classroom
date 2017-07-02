@@ -7,6 +7,9 @@ export interface IHistory {
   attempt: string;
 }
 
+/**
+ * Displays previous attempts to questions
+ */
 @Component({
   selector: 're-answer-history',
   templateUrl: './answer-history.component.html',

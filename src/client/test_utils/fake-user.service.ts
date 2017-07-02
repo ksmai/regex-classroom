@@ -29,4 +29,12 @@ export class FakeUserService {
   isNameAvailable() {
     return;
   }
+
+  passExam() {
+    return;
+  }
+
+  winCompetition() {
+    return;
+  }
 }

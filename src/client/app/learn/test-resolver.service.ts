@@ -4,6 +4,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { ILevel, LevelService } from '../core/level.service';
 
+/**
+ * Resolve the test data by aggregating tests from the previous levels
+ * up to and including the current level
+ */
 @Injectable()
 export class TestResolver implements Resolve<ILevel> {
   constructor(private levelService: LevelService) {

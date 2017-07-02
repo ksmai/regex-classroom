@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MD_DIALOG_DATA } from '@angular/material';
 
+/**
+ * Show the summary statistics after learning
+ */
 @Component({
   templateUrl: './summary-dialog.component.html',
   styleUrls: ['./summary-dialog.component.scss'],
