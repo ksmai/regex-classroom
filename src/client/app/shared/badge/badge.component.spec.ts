@@ -7,14 +7,15 @@ describe('BadgeComponent', () => {
     component = new BadgeComponent();
   });
 
-  it('should change colors according to inputs', () => {
-    const fgColorDefault = component.fgColor;
-    const bgColorDefault = component.bgColor;
+  it('should update classes', () => {
     component.level = 1;
     component.type = 'b';
+    component.locked = true;
     component.ngOnChanges();
-    expect(fgColorDefault).not.toEqual(component.fgColor);
-    expect(bgColorDefault).not.toEqual(component.bgColor);
+    expect(component.classes.badge).toBeTruthy();
+    expect(component.classes['badge--level-1']).toBeTruthy();
+    expect(component.classes['badge--type-b']).toBeTruthy();
+    expect(component.classes['badge--locked']).toBeTruthy();
   });
 
   it('should change tooltips according to inputs', () => {
