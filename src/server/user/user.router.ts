@@ -49,6 +49,18 @@ userRouter
     },
   );
 
+userRouter.get('/leaderboard', ensureLogin, (req, res, next) => {
+  const skip = Number(req.query.skip) || 0;
+  const limit = Number(req.query.limit) || 0;
+  (User as any)
+    .listUsers(skip, limit)
+    .then((users: any[]) => res.json({ users }))
+    .catch((err: Error|any) => {
+      err.status(400);
+      next(err);
+    });
+});
+
 userRouter.use((
   err: Error|any,
   req: express.Request,

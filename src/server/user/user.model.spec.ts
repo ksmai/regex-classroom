@@ -64,6 +64,19 @@ describe('User model', () => {
         .then((foundUser: any) => foundUser ? done() : done.fail());
     });
 
+    it('should save user with existing progress/badges, if any', (done) => {
+      const name = user.name + '2';
+      const progress = [1, 3, 5, 7, 9];
+      const badges = [2, 3, 5, 7];
+      (User as any)
+        .signup(name, password, progress, badges)
+        .then((newUser: any) => {
+          expect(newUser.badges).toEqual(badges);
+          expect(newUser.progress).toEqual(progress);
+        })
+        .then(done, done.fail);
+    });
+
     it('should not allow signing up with an existing name', (done) => {
       (User as any)
         .signup(user.name, password)
@@ -143,15 +156,88 @@ describe('User model', () => {
 
     it('should throw if setting progress of non-existent user', (done) => {
       (User as any)
-        .setProgress(user._id.replace(/./g, 'x'), [1, 2, 3])
+        .setProgress(user._id.replace(/./g, 'x'), [1, 2, 3], [])
         .then(() => done.fail(), done);
     });
 
-    it('should show level of a user', (done) => {
+    it('should compute level from the progress array', (done) => {
+      const progress = [1, 3, 5, 7, 9];
+      const level = progress.reduce((sum, cur) => sum + cur, 0) / 10;
       (User as any)
-        .getProgress(user._id)
+        .setProgress(user._id, progress, [])
         .then((returnedUser: any) => {
-          expect(returnedUser.level).toBeDefined();
+          expect(returnedUser.level).toEqual(level);
+        })
+        .then(done, done.fail);
+    });
+
+    it('should compute totalBadges from the badges array', (done) => {
+      const badges = [3, 7, 2, 5, 0];
+      const totalBadges = 8;
+      (User as any)
+        .setProgress(user._id, [], badges)
+        .then((returnedUser: any) => {
+          expect(returnedUser.totalBadges).toEqual(totalBadges);
+        })
+        .then(done, done.fail);
+    });
+  });
+
+  describe('listUsers', () => {
+    it('should sort users by levels and then totalBadges', (done) => {
+      const midLevel = user.level;
+      const highLevel = midLevel + 1;
+      const lowLevel = midLevel - 1;
+      const moreBadges = user.totalBadges + 2;
+      const lessBadges = user.totalBadges + 1;
+      User
+        .create([
+          {
+            name: 'list1',
+            hash: 'hash',
+            level: highLevel,
+            totalBadges: moreBadges,
+          },
+          {
+            name: 'list2',
+            hash: 'hash',
+            level: highLevel,
+            totalBadges: lessBadges,
+          },
+          {
+            name: 'list3',
+            hash: 'hash',
+            level: midLevel,
+            totalBadges: moreBadges,
+          },
+          {
+            name: 'list4',
+            hash: 'hash',
+            level: midLevel,
+            totalBadges: lessBadges,
+          },
+          {
+            name: 'list5',
+            hash: 'hash',
+            level: lowLevel,
+            totalBadges: moreBadges,
+          },
+          {
+            name: 'list6',
+            hash: 'hash',
+            level: lowLevel,
+            totalBadges: lessBadges,
+          },
+        ])
+        .then(() => (User as any).listUsers())
+        .then((users: any[]) => {
+          for (let i = 1; i < users.length; i++) {
+            expect(users[i].level).not.toBeGreaterThan(users[i - 1].level);
+            if (users[i].level === users[i - 1].level) {
+              expect(users[i].totalBadges)
+                .not.toBeGreaterThan(users[i - 1].totalBadges);
+            }
+          }
         })
         .then(done, done.fail);
     });

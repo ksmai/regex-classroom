@@ -3,6 +3,7 @@ import { HttpModule } from '@angular/http';
 
 import { AuthGuard } from './auth-guard.service';
 import { CanDeactivateGuard } from './can-deactivate-guard.service';
+import { LeaderboardService } from './leaderboard.service';
 import { LevelListResolver } from './level-list-resolver.service';
 import { LevelService } from './level.service';
 import { UserService } from './user.service';
@@ -16,6 +17,7 @@ import { UserService } from './user.service';
     AuthGuard,
     CanDeactivateGuard,
     UserService,
+    LeaderboardService,
     LevelService,
     LevelListResolver,
   ],

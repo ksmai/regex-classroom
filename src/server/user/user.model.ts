@@ -31,6 +31,13 @@ export const userSchema = new mongoose.Schema({
     set: (arr) => arr.map((points: number) => Math.round(points)),
   },
 
+  // the sum of all highscores in the progress array divided by 10
+  level: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+
   // each number represents a collection of badges in the corresponding
   // level, where the n-th least significant bit represents the n-th
   // badge
@@ -40,16 +47,17 @@ export const userSchema = new mongoose.Schema({
     get: (arr) => arr,
     set: (arr) => arr.map((points: number) => (points | 0)),
   },
+
+  totalBadges: {
+    type: Number,
+    default: 0,
+    get: (n) => Math.round(n),
+    set: (n) => Math.round(n),
+  },
 });
 
 userSchema.set('toJSON', { virtuals: true, getters: true });
 userSchema.set('toObject', { virtuals: true, getters: true });
-
-userSchema.virtual('level').get(function() {
-  const sum = this.progress
-    .reduce((total: number, current: number) => total + current, 0);
-  return sum / 10;
-});
 
 userSchema.statics.signup = function(
   name: string,
@@ -73,8 +81,8 @@ userSchema.statics.signup = function(
 
       return bcrypt.hash(password, 8);
     })
-    .then((hash: string) => this.create({ name, hash, progress, badges }))
-    .then(helpers.toObject);
+    .then((hash: string) => this.create({ name, hash }))
+    .then((user: any) => this.setProgress(user._id, progress, badges));
 };
 
 userSchema.statics.login = function(name: string, password: string) {
@@ -109,7 +117,10 @@ userSchema.statics.setProgress = function(
   progress: number[],
   badges: number[],
 ) {
-  const updates = { progress, badges };
+  const level = progress.reduce((sum, cur) => sum + cur, 0) / 10;
+  const totalBadges = badges
+    .reduce((sum, cur) => sum + helpers.totalBits(cur), 0);
+  const updates = { progress, badges, level, totalBadges };
   const options = {
     new: true,
     upsert: false,
@@ -120,6 +131,16 @@ userSchema.statics.setProgress = function(
     .findByIdAndUpdate(userID, updates, options)
     .then(helpers.assertUser('User not found'))
     .then(helpers.toObject);
+};
+
+userSchema.statics.listUsers = function(skip = 0, limit = 50) {
+  return this
+    .find({})
+    .select({ hash: 0 })
+    .sort({ level: -1, totalBadges: -1, name: 1 })
+    .skip(skip)
+    .limit(limit)
+    .exec();
 };
 
 export const User = mongoose.model('User', userSchema, 'users');
