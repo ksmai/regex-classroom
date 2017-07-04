@@ -7,18 +7,27 @@
     >^Regex\sClas&#123;2&#125;room$</a>
   </nav>
   <nav class="secondary-nav">
-    <a md-button routerLink="/cheatsheet">CHEATSHEET</a>
+    <a md-button routerLink="/cheatsheet">
+      <span>CHEATSHEET </span>
+      <md-icon>assignment</md-icon>
+    </a>
   </nav>
 
   <nav class="auth-nav">
     <ng-container *ngIf="user && user.name; else login">
       <a md-button routerLink="/profile">Welcome, {{user.name}}</a>
-      <a md-button routerLink="/leaderboard">Leaderboard</a>
+      <a md-button routerLink="/leaderboard">
+        <span>LEADERBOARD </span>
+        <md-icon>equalizer</md-icon>
+      </a>
       <button
         md-button
         (click)="logout()"
         *ngIf="!isLoggingOut; else loader"
-      >LOGOUT</button>
+      >
+        <span>LOGOUT </span>
+        <md-icon>exit_to_app</md-icon>
+      </button>
       <ng-template #loader>
         <md-spinner color="accent" class="spinner"></md-spinner>
       </ng-template>

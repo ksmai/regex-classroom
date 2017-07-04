@@ -1,1 +1,45 @@
-coming soon
+<md-card *ngIf="userList | async as users" class="leaderboard">
+  <md-card-content class="leaderboard__content">
+    <table class="leaderboard__table">
+      <thead>
+        <tr class="leaderboard__headers">
+          <th class="leaderboard__header leaderboard__header--rank">
+            Rank
+          </th>
+          <th class="leaderboard__header leaderboard__header--name">
+            Name
+          </th>
+          <th class="leaderboard__header leaderboard__header--badges">
+            Badges
+          </th>
+          <th class="leaderboard__header leaderboard__header--level">
+            Level
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let user of users; let i=index"
+          class="leaderboard__row"
+          [class.leaderboard__row--first]="i === 0"
+          [class.leaderboard__row--second]="i === 1"
+          [class.leaderboard__row--third]="i === 2"
+          [class.leaderboard__row--self]="me?.id === user.id"
+        >
+          <td class="leaderboard__data leaderboard__data--rank">
+            {{i + 1}}
+          </td>
+          <td class="leaderboard__data leaderboard__data--name">
+            {{user.name}}
+          </td>
+          <td class="leaderboard__data leaderboard__data--badges">
+            {{user.totalBadges}}
+          </td>
+          <td class="leaderboard__data leaderboard__data--level">
+            {{user.level}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-card-content>
+</md-card>
