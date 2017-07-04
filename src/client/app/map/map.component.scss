@@ -222,6 +222,14 @@ $deepred: rgb(215, 31, 75);
   }
 }
 
+.prompt__text {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media (max-width: 500px) {
   .level__link {
     margin: 0 25px;

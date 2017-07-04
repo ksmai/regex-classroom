@@ -32,9 +32,9 @@ export class BadgeComponent implements OnChanges {
   private getTooltip(): string {
     switch (this.type) {
       case 'a':
-        return `Reward for beating Alice in level ${this.level + 1}`;
+        return `Reward for beating Alice in level ${this.level}`;
       case 'b':
-        return `Reward for beating Bob in level ${this.level + 1}`;
+        return `Reward for beating Bob in level ${this.level}`;
       default:
         return this.tooltip;
     }

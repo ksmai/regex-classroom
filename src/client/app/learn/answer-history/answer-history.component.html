@@ -1,8 +1,12 @@
 <ul class="answers">
   <li *ngFor="let history of histories | slice:0:2" class="answer">
     <p class="answer__question">{{history.question}}</p>
-    <p class="answer__attempt" [reCompareString]="history.answer">
-      {{history.attempt}}
+    <p class="answer__attempt">
+      <span [reCompareString]="history.answer">{{history.attempt}}</span>
+      <ng-container *ngIf="history.answer !== history.attempt">
+        <span> &gt; </span>
+        <span [reCompareString]="history.attempt">{{history.answer}}</span>
+      </ng-container>
     </p>
   </li>
 </ul>

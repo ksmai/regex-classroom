@@ -26,6 +26,7 @@ export class MapComponent implements OnInit, OnDestroy {
   scores: string[] = [];
   badges: boolean[][] = [];
   badgesPerLevel: number = 2;
+  promptClosed: boolean = false;
   private subscription: Subscription;
 
   constructor(
@@ -47,6 +48,17 @@ export class MapComponent implements OnInit, OnDestroy {
         this.updateScores();
         this.updateBadges();
       });
+  }
+
+  onClosePrompt(): void {
+    this.promptClosed = true;
+  }
+
+  get shouldPrompt(): boolean {
+    return !this.promptClosed &&
+      !this.user.name && (
+      this.user.progress.some((p) => p > 0) ||
+      this.user.badges.some((b) => b > 0));
   }
 
   private updateUser(user: IUser): void {
