@@ -72,9 +72,9 @@ export class NavComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll')
   private onScroll(evt: Event) {
     clearTimeout(this.hideTimeout);
-    if (window.scrollY <= 100) {
+    if (window.scrollY === 0) {
       this.show = true;
-    } else if (window.scrollY < this.prevScrollY) {
+    } else if (window.scrollY < 100 || window.scrollY < this.prevScrollY) {
       this.show = true;
       this.hideTimeout = setTimeout(() => this.show = false, 3000);
     } else {
