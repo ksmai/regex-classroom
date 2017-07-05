@@ -64,4 +64,10 @@ describe('MapComponent', () => {
       [false, false],
     ]);
   });
+
+  it('should close the prompt', () => {
+    expect(component.promptClosed).toBe(false);
+    component.onClosePrompt();
+    expect(component.promptClosed).toBe(true);
+  });
 });

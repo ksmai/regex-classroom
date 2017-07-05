@@ -15,6 +15,7 @@ export interface IUser {
   id?: string;
   name?: string;
   level?: number;
+  totalBadges?: number;
   progress: number[];
   badges: number[];
 }

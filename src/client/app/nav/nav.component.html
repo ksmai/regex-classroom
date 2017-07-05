@@ -8,7 +8,7 @@
   </nav>
   <nav class="secondary-nav">
     <a md-button routerLink="/cheatsheet">
-      <span>CHEATSHEET </span>
+      <span>CHEATSHEET&nbsp;</span>
       <md-icon>assignment</md-icon>
     </a>
   </nav>
@@ -17,7 +17,7 @@
     <ng-container *ngIf="user && user.name; else login">
       <a md-button routerLink="/profile">Welcome, {{user.name}}</a>
       <a md-button routerLink="/leaderboard">
-        <span>LEADERBOARD </span>
+        <span>LEADERBOARD&nbsp;</span>
         <md-icon>equalizer</md-icon>
       </a>
       <button
@@ -25,7 +25,7 @@
         (click)="logout()"
         *ngIf="!isLoggingOut; else loader"
       >
-        <span>LOGOUT </span>
+        <span>LOGOUT&nbsp;</span>
         <md-icon>exit_to_app</md-icon>
       </button>
       <ng-template #loader>

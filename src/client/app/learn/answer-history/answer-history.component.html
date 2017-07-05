@@ -4,7 +4,7 @@
     <p class="answer__attempt">
       <span [reCompareString]="history.answer">{{history.attempt}}</span>
       <ng-container *ngIf="history.answer !== history.attempt">
-        <span> &gt; </span>
+        <span>&nbsp;&gt;&nbsp;</span>
         <span [reCompareString]="history.attempt">{{history.answer}}</span>
       </ng-container>
     </p>
