@@ -51,8 +51,8 @@ export class ExamComponent implements OnInit, ICanComponentDeactivate {
   canDeactivate(): Observable<boolean>|boolean {
     return !this.started || this.dialog.open(ConfirmDialogComponent, {
       data: {
-        content: 'Flee? Really?',
-        yes: 'FLEE NOW',
+        content: 'Flee?',
+        yes: 'FLEE',
         no: 'CANCEL',
       },
     }).afterClosed();

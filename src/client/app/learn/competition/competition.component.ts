@@ -59,8 +59,8 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
     return !this.started || this.dialog.open(ConfirmDialogComponent, {
       data: {
         content: 'Surrender?',
-        yes: 'MERCY',
-        no: 'NEVER',
+        yes: 'SURRENDER',
+        no: 'NO',
       },
     }).afterClosed();
   }
@@ -110,9 +110,9 @@ export class CompetitionComponent implements OnInit, OnDestroy, ICanComponentDea
       header = 'It was a close game';
       footer = 'Better luck next time';
     } else {
-      title = 'Surrendered';
-      header = 'Coward!';
-      footer = 'Suck it up! You can do it!';
+      title = 'You surrendered';
+      header = 'Never give up again!';
+      footer = 'Always try your best!';
     }
 
     this.dialog.open(SummaryDialogComponent, {
