@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import 'rxjs/add/observable/interval';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { IUser, UserService } from '../core/user.service';
@@ -41,6 +43,11 @@ export class NavComponent implements OnInit, OnDestroy {
       .userService
       .fetchUser()
       .subscribe((user: IUser) => this.user = user);
+    // fix an issue where the scrollHeight of the content changes
+    // after the navbar hides, so that the scrollbar disppears and
+    // there is no way for the navbar to be displayed again
+    const scroll$ = Observable.interval(3000);
+    this.subscription.add(scroll$.subscribe(() => this.onScroll()));
   }
 
   ngOnDestroy(): void {
@@ -70,7 +77,7 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:scroll')
-  private onScroll(evt: Event) {
+  private onScroll() {
     clearTimeout(this.hideTimeout);
     if (window.scrollY === 0) {
       this.show = true;

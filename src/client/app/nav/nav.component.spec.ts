@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 
@@ -25,13 +27,7 @@ class Page {
   }
 
   createElements() {
-    TestBed.get(UserService).user$.next({ name: 'let me logout' });
-    fixture.detectChanges();
-
-    return fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      this.logoutButton = fixture.debugElement.query(By.css('button'));
-    });
+    this.logoutButton = fixture.debugElement.query(By.css('button'));
   }
 
   logout(): void {
@@ -48,11 +44,23 @@ function createNavComponent() {
 
   return fixture.whenStable().then(() => {
     fixture.detectChanges();
-    return page.createElements();
+    page.createElements();
   });
 }
 
 describe('NavComponent', () => {
+  // work around an issue where Observable.interval does not work
+  // inside zone.js, causing tests to fail
+  // https://github.com/angular/angular/issues/10127
+  let originalInterval: any;
+  beforeAll(() => {
+    originalInterval = Observable.interval;
+    Observable.interval = (t: number) => Observable.empty();
+  });
+  afterAll(() => {
+    Observable.interval = originalInterval;
+  });
+
   beforeEach(async(() => {
     TestBed
       .configureTestingModule({
@@ -68,8 +76,12 @@ describe('NavComponent', () => {
   }));
 
   it('should provide logout button after user login', () => {
+    TestBed.get(UserService).user$.next({ name: 'let me logout' });
+    fixture.detectChanges();
+    page.createElements();
     expect(page.logoutButton).toBeTruthy();
     page.logout();
+    fixture.detectChanges();
     expect(page.logoutSpy).toHaveBeenCalled();
   });
 });
